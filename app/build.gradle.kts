@@ -1,4 +1,4 @@
-git plugins {
+plugins {
     id("com.android.application")
 }
 
