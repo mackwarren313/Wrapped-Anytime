@@ -17,10 +17,10 @@ jobs:
 
     steps:
     - name: Setup Resources
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
       # need to cache dependencies etc.
-    - name: Setup Gradle
+    - name: Setup Gradle 
       uses: gradle/actions/setup-gradle@v3
 
     - name: Build
