@@ -27,22 +27,21 @@ jobs:
       run: |
         ./gradlew build --scan
 
-      if: ${{ failure() }}
-        - name: On Failure
+    - name: Handle Push Events
+      # handle push events
+      if: ${{ failure() && github.event_name == 'push' }}
+      run: |
+        export PUSH_DEPTH=$(git rev-list --count ${{ github.event.before }}..${{ github.event.after }}) &&
+        git config --global user.name 'Github Workflow' &&
+        git branch failed-build_${{ github.event.before }}-${{ github.event.after }} &&
+        git add -A &&
+        git commit -m "Failed push for hash \n hash ${{ github.event.before }} through ${{ github.event.after }} \n <summary>" &&
+        git push &&
+        git checkout master &&
+        git reset --hard HEAD~$PUSH_DEPTH
 
-        # handle push events
-        if: ${{ github.event_name == 'push' }}
-          run: export PUSH_DEPTH=$(git rev-list --count ${{ github.event.before }}..${{ github.event.after }})
-          run: |
-            git config --global user.name 'Github Workflow' &&
-            git branch failed-build_${{ github.event.before }}-${{ github.event.after }} &&
-            git add -A &&
-            git commit -m "Failed push for hash \n hash ${{ github.event.before }} through ${{ github.event.after }} \n <ummary>" &&
-            git push &&
-            git checkout master &&
-            git reset --hard HEAD~$PUSH_DEPTH
-
-        # handle pull request events
-        if: ${{ github.event_name == 'pull_request' }}
-            run : |
-              gh pr comment ${{ github.event.number }} --body <summary>
+    - name: Handle PR Events
+      # handle pull request events
+      if: ${{ failure() && github.event_name == 'pull_request' }}
+      run: |
+        gh pr comment ${{ github.event.number }} --body <summary>
