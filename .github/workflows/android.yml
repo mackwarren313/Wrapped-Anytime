@@ -47,6 +47,8 @@ jobs:
         # git checkout main &&
         git checkout workflow-testing &&
         git reset --hard HEAD~$PUSH_DEPTH
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Handle PR Events
       # handle pull request events
