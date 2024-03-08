@@ -23,6 +23,8 @@ jobs:
     - name: Setup Gradle 
       uses: gradle/actions/setup-gradle@v3
 
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
     - name: Build
       run: |
         ./gradlew build --scan
@@ -32,7 +34,7 @@ jobs:
       if: ${{ failure() && github.event_name == 'push' && github.ref_name == 'main' }}
       run: |
         export PUSH_DEPTH=$(git rev-list --count ${{ github.event.before }}..${{ github.event.after }}) &&
-        git config --global user.name 'Github Workflow' &&
+        # git config --global user.name 'Github Workflow' &&
         git branch failed-build_${{ github.event.before }}-${{ github.event.after }} &&
         git add -A &&
         git commit -m "Failed push for hash \n hash ${{ github.event.before }} through ${{ github.event.after }} \n <summary>" &&
