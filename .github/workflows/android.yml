@@ -9,6 +9,7 @@ on:
 permissions:
   pull-requests: write
   repository-projects: write
+  contents: write
   issues: write
 
 jobs:
@@ -19,6 +20,8 @@ jobs:
     steps:
     - name: Setup Resources
       uses: actions/checkout@v4
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # need to cache dependencies etc.
     - name: set up JDK 17
@@ -49,7 +52,7 @@ jobs:
         git checkout workflow-testing &&
         git reset --hard HEAD~$PUSH_DEPTH
       env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Handle PR Events
       # handle pull request events
