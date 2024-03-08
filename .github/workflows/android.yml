@@ -35,7 +35,7 @@ jobs:
 
     - name: Handle Push Events
       # handle push events
-      if: ${{ failure() && github.event_name == 'push' && github.ref_name == 'main' }}
+      if: ${{ failure() && github.event_name == 'push' && github.ref_name == 'workflow-testing' }}
       run: |
         export PUSH_DEPTH=$(git rev-list --count ${{ github.event.before }}..${{ github.event.after }}) &&
         # git config --global user.name 'Github Workflow' &&
@@ -43,7 +43,8 @@ jobs:
         git add -A &&
         git commit -m "Failed push for hash \n hash ${{ github.event.before }} through ${{ github.event.after }} \n <summary>" &&
         git push &&
-        git checkout main &&
+        # git checkout main &&
+        git checkout workflow-testing &&
         git reset --hard HEAD~$PUSH_DEPTH
 
     - name: Handle PR Events
