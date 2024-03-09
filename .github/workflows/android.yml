@@ -40,7 +40,7 @@ jobs:
     - name: Handle Push Events
       # handle push events
       # needs to push all commits to new branch then revert changes from main
-      # TODO : condense commit messages
+      # TODO : condense commit messages 
       if: ${{ failure() && github.event_name == 'push' && github.ref_name == 'workflow-testing' }}
       run: |
         export PUSH_DEPTH=$(git rev-list --count ${{ github.event.before }}..${{ github.event.after }}) &&
