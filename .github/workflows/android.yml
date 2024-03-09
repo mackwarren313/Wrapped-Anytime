@@ -39,18 +39,18 @@ jobs:
 
     - name: Handle Push Events
       # handle push events
+      # needs to push all commits to new branch then revert changes from main
       if: ${{ failure() && github.event_name == 'push' && github.ref_name == 'workflow-testing' }}
       run: |
         export PUSH_DEPTH=$(git rev-list --count ${{ github.event.before }}..${{ github.event.after }}) &&
         git config --global user.name "Your Worklow... Probably" &&
         git config --global user.email "zsalgado3@gatech.edu" &&
-        git branch failed-build_${{ github.event.before }}-${{ github.event.after }} &&
+        git checkout workflow-testing &&
+        git reset --soft HEAD~$PUSH_DEPTH
+        git checkout -b failed-build_${{ github.event.before }}-${{ github.event.after }} &&
         git add -A &&
         git commit -m "Failed push for hash \n hash ${{ github.event.before }} through ${{ github.event.after }} \n <summary>" &&
         git push &&
-        # git checkout main &&
-        git checkout workflow-testing &&
-        git reset --hard HEAD~$PUSH_DEPTH
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
