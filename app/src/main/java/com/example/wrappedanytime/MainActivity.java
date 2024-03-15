@@ -1,9 +1,14 @@
 package com.example.wrappedanytime;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.wrappedanytime.spotify.Authentication;
+import com.example.wrappedanytime.spotify.Datatypes.User;
+import com.example.wrappedanytime.spotify.SpotifyData;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -20,20 +25,24 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-
+    private SpotifyData dataRetriever;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        dataRetriever = new SpotifyData(MainActivity.this);
         setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                String userData = null;
+                Log.d("myLog", "before user call");
+                User user = dataRetriever.getUser();
+                //Log.d("myLog", user.toString());
+                Log.d("myLog", "after user call");
+
             }
         });
         DrawerLayout drawer = binding.drawerLayout;
@@ -47,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Authentication.storeAuth(requestCode, resultCode, data);
     }
 
     @Override

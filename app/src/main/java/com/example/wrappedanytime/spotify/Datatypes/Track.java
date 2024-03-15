@@ -1,12 +1,12 @@
-package com.example.wrappedanytime;
+package com.example.wrappedanytime.spotify.Datatypes;
 
-public class Song {
+public class Track {
     private String name;
     private String artist;
     private String color;
     private int length;
 
-    public Song(String name, String artist, String color, int length) {
+    public Track(String name, String artist, String color, int length) {
         this.name = name;
         this.artist = artist;
         this.color = color;
@@ -47,7 +47,7 @@ public class Song {
 
     @Override
     public String toString() {
-        return "Song{" +
+        return "Track{" +
                 "name='" + name + '\'' +
                 ", artist='" + artist + '\'' +
                 ", color='" + color + '\'' +
