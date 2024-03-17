@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Toast;
 
+import com.example.wrappedanytime.spotify.Datatypes.Album;
 import com.example.wrappedanytime.spotify.Datatypes.Image;
 import com.example.wrappedanytime.spotify.Datatypes.Track;
 import com.example.wrappedanytime.spotify.Datatypes.User;
@@ -95,10 +96,7 @@ public class SpotifyData {
             if (jsonObject.has("images")) {
                 JsonArray jsonArray = jsonObject.getAsJsonArray("images");
                 JsonObject largestImage = jsonArray.get(jsonArray.size()-1).getAsJsonObject();
-                String imageUrl = largestImage.get("url").getAsString();
-                int height = largestImage.get("height").getAsInt();
-                int width = largestImage.get("width").getAsInt();
-                ret.setPfp(new Image(imageUrl, height, width));
+                ret.setPfp(new Image(largestImage));
             }
             if (jsonObject.has("email")) {
                 String email = jsonObject.get("email").getAsString();
@@ -126,6 +124,41 @@ public class SpotifyData {
         ret.setLength(jsonObject.get("duration_ms").getAsInt());
         ret.setId(jsonObject.get("id").getAsString());
         ret.setPreviewUrl(jsonObject.get("preview_url").getAsString());
+        return ret;
+    }
+    public Album getAlbum(String albumID) {
+        Album ret = new Album();
+        final Request request = new Request.Builder()
+                .url("https://api.spotify.com/v1/albums/" + albumID)
+                .addHeader("Authorization", "Bearer " + mAccessToken)
+                .build();
+        JsonObject jsonObject = JsonParser.parseString(retJSON(request)).getAsJsonObject();
+        ret.setId(jsonObject.get("id").getAsString());
+        ret.setName(jsonObject.get("name").getAsString());
+        ret.setTotal_tracks(jsonObject.get("total_tracks").getAsInt());
+
+        JsonArray images = jsonObject.getAsJsonArray("images");
+        JsonObject largestImage = images.get(0).getAsJsonObject();
+        ret.setCoverArt(new Image(largestImage));
+
+        ArrayList<String> artistIDs = new ArrayList<>();
+        for (JsonElement artist : jsonObject.getAsJsonArray("artists")) {
+            artistIDs.add(artist.getAsJsonObject().get("id").getAsString());
+        }
+        ret.setArtistIDs(artistIDs);
+
+        ArrayList<String> trackIds = new ArrayList<>();
+        for (JsonElement track : jsonObject.getAsJsonObject("tracks").getAsJsonArray("items")) {
+            trackIds.add(track.getAsJsonObject().get("id").getAsString());
+        }
+        ret.setTrackIDs(trackIds);
+
+        ArrayList<String> genres = new ArrayList<>();
+        for (JsonElement genre : jsonObject.getAsJsonArray("genres")) {
+            genres.add(genre.getAsString());
+        }
+        ret.setGenres(genres);
+
         return ret;
     }
 }

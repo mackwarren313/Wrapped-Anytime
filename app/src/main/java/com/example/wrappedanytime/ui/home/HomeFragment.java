@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.wrappedanytime.MainActivity;
 import com.example.wrappedanytime.databinding.FragmentHomeBinding;
+import com.example.wrappedanytime.spotify.Datatypes.Album;
 import com.example.wrappedanytime.spotify.Datatypes.Track;
 import com.example.wrappedanytime.spotify.Datatypes.User;
 import com.example.wrappedanytime.spotify.SpotifyData;
@@ -42,22 +43,14 @@ public class HomeFragment extends Fragment {
          * This will return a User object. More objects coming.
          */
         SpotifyData dataRetriever = new SpotifyData(this.getActivity());
-        Track track = dataRetriever.getTrack("2G9lekfCh83S0lt2yfffBz");
-        homeViewModel.setText(track.toString());
-        mp = new MediaPlayer();
-        try {
-            mp.setDataSource(track.getPreviewUrl());
-            mp.prepare();
-            mp.start();
-        } catch (IOException ignored) {
-        }
+        Album album = dataRetriever.getAlbum("1kCHru7uhxBUdzkm4gzRQc");
+        homeViewModel.setText(album.toString());
         return root;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mp.release();
         binding = null;
     }
 }
