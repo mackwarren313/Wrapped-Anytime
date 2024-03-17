@@ -30,7 +30,15 @@ public class HomeFragment extends Fragment {
 
         final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        User user = new SpotifyData(this.getActivity()).getUser();
+        /*Model of how to use the spotify data getter
+         * At the top of your class's onCreateView, put:
+         * SpotifyData dataRetriever = new SpotifyData(this.getActivity());
+         * Then, later, wherever you want the data, put:
+         * dataRetriever.getUser();
+         * This will return a User object. More objects coming.
+         */
+        SpotifyData dataRetriever = new SpotifyData(this.getActivity());
+        User user = dataRetriever.getUser();
         homeViewModel.setText(user.toString());
         return root;
     }
