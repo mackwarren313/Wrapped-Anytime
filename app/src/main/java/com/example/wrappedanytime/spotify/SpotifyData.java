@@ -1,6 +1,7 @@
 package com.example.wrappedanytime.spotify;
 
 import static com.example.wrappedanytime.spotify.Authentication.mAccessToken;
+import static com.example.wrappedanytime.spotify.Authentication.mOkHttpClient;
 
 import android.app.Activity;
 import android.util.Log;
@@ -8,6 +9,11 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.Toast;
 
 import com.example.wrappedanytime.spotify.Datatypes.User;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,15 +58,43 @@ public class SpotifyData {
         }
     }
     public User getUser() {
-        if (Authentication.mAccessToken == null) {
-            Authentication.getToken(activity);
-        }
-
-        // Create a request to get the user profile
+        User ret = new User();
         final Request request = new Request.Builder()
                 .url("https://api.spotify.com/v1/me")
                 .addHeader("Authorization", "Bearer " + mAccessToken)
                 .build();
+        JsonElement jsonElement = JsonParser.parseString(retJSON(request));
+        if (jsonElement.isJsonObject()) {
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            if (jsonObject.has("display_name")) {
+                String name = jsonObject.get("display_name").getAsString();
+                ret.setDisplayName(name);
+            }
+            if (jsonObject.has("id")) {
+                String id = jsonObject.get("id").getAsString();
+                ret.setId(id);
+            }
+            if (jsonObject.has("uri")) {
+                String uri = jsonObject.get("uri").getAsString();
+                ret.setUri(uri);
+            }
+            if (jsonObject.has("images")) {
+                JsonArray jsonArray = jsonObject.getAsJsonArray("images");
+                JsonObject largestImage = jsonArray.get(jsonArray.size()-1).getAsJsonObject();
+                String imageUrl = largestImage.get("url").getAsString();
+                int height = largestImage.get("height").getAsInt();
+                int width = largestImage.get("width").getAsInt();
+                ret.setPfp(new User.ProfilePic(imageUrl, height, width));
+            }
+            if (jsonObject.has("email")) {
+                String email = jsonObject.get("email").getAsString();
+                ret.setEmail(email);
+            }
+        }
+
+        return ret;
+    }
+    private String retJSON(Request request) {
         DataGetter dg = new DataGetter(Authentication.mOkHttpClient, request);
         Thread thread =new Thread(dg);
         thread.start();
@@ -69,10 +103,6 @@ public class SpotifyData {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        String userString = dg.getValue();
-        Log.d("myLog", userString);
-
-
-        return null;
+        return dg.getValue();
     }
 }

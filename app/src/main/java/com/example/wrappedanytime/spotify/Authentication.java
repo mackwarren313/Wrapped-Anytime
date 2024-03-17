@@ -34,6 +34,9 @@ public class Authentication {
         final AuthorizationRequest request = getAuthenticationRequest(AuthorizationResponse.Type.TOKEN);
         AuthorizationClient.openLoginActivity(activity, AUTH_TOKEN_REQUEST_CODE, request);
     }
+    public static String getAccessToken() {
+        return mAccessToken;
+    }
     public static void storeAuth(int requestCode, int resultCode, Intent data) {
         final AuthorizationResponse response = AuthorizationClient.getResponse(resultCode, data);
 

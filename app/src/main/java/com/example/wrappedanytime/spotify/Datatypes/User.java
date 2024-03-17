@@ -1,7 +1,7 @@
 package com.example.wrappedanytime.spotify.Datatypes;
 
 public class User {
-    static class ProfilePic {
+    public static class ProfilePic {
         String url;
         int height, width;
 
@@ -15,8 +15,8 @@ public class User {
         public String toString() {
             return "ProfilePic{" +
                     "url='" + url + '\'' +
-                    ", height=" + height +
-                    ", width=" + width +
+                    "\n height=" + height +
+                    "\n width=" + width +
                     '}';
         }
     }
@@ -24,13 +24,18 @@ public class User {
     private String id;
     private ProfilePic pfp;
     private String uri;
+    private String email;
 
-    public User(String displayName, String id, ProfilePic pfp, String uri) {
+    public User(String displayName, String id, ProfilePic pfp, String uri, String email) {
         this.displayName = displayName;
         this.id = id;
         this.pfp = pfp;
         this.uri = uri;
+        this.email = email;
 
+    }
+    public User() {
+        this(null, null, null, null, null);
     }
 
     public String getDisplayName() {
@@ -47,6 +52,14 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public ProfilePic getPfp() {
@@ -69,9 +82,10 @@ public class User {
     public String toString() {
         return "User{" +
                 "displayName='" + displayName + '\'' +
-                ", id='" + id + '\'' +
-                ", pfp=" + pfp +
-                ", uri='" + uri + '\'' +
+                "\n id='" + id + '\'' +
+                "\n pfp=" + pfp +
+                "\n uri='" + uri + '\'' +
+                "\n email='" + email + '\'' +
                 '}';
     }
 }
