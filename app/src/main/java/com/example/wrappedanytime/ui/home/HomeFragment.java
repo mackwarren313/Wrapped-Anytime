@@ -1,5 +1,6 @@
 package com.example.wrappedanytime.ui.home;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,13 +14,16 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.wrappedanytime.MainActivity;
 import com.example.wrappedanytime.databinding.FragmentHomeBinding;
+import com.example.wrappedanytime.spotify.Datatypes.Track;
 import com.example.wrappedanytime.spotify.Datatypes.User;
 import com.example.wrappedanytime.spotify.SpotifyData;
+
+import java.io.IOException;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-
+    private MediaPlayer mp;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
@@ -38,14 +42,22 @@ public class HomeFragment extends Fragment {
          * This will return a User object. More objects coming.
          */
         SpotifyData dataRetriever = new SpotifyData(this.getActivity());
-        User user = dataRetriever.getUser();
-        homeViewModel.setText(user.toString());
+        Track track = dataRetriever.getTrack("2G9lekfCh83S0lt2yfffBz");
+        homeViewModel.setText(track.toString());
+        mp = new MediaPlayer();
+        try {
+            mp.setDataSource(track.getPreviewUrl());
+            mp.prepare();
+            mp.start();
+        } catch (IOException ignored) {
+        }
         return root;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        mp.release();
         binding = null;
     }
 }

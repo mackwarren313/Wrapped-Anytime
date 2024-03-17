@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Toast;
 
+import com.example.wrappedanytime.spotify.Datatypes.Image;
+import com.example.wrappedanytime.spotify.Datatypes.Track;
 import com.example.wrappedanytime.spotify.Datatypes.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -19,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -31,7 +34,7 @@ public class SpotifyData {
     public SpotifyData(Activity activity) {
         this.activity = activity;
     }
-    public class DataGetter implements Runnable {
+    private class DataGetter implements Runnable {
         private String value;
         private Request request;
         private Call call;
@@ -56,6 +59,17 @@ public class SpotifyData {
         public String getValue() {
             return value;
         }
+    }
+    private String retJSON(Request request) {
+        DataGetter dg = new DataGetter(Authentication.mOkHttpClient, request);
+        Thread thread =new Thread(dg);
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return dg.getValue();
     }
     public User getUser() {
         User ret = new User();
@@ -84,7 +98,7 @@ public class SpotifyData {
                 String imageUrl = largestImage.get("url").getAsString();
                 int height = largestImage.get("height").getAsInt();
                 int width = largestImage.get("width").getAsInt();
-                ret.setPfp(new User.ProfilePic(imageUrl, height, width));
+                ret.setPfp(new Image(imageUrl, height, width));
             }
             if (jsonObject.has("email")) {
                 String email = jsonObject.get("email").getAsString();
@@ -94,15 +108,24 @@ public class SpotifyData {
 
         return ret;
     }
-    private String retJSON(Request request) {
-        DataGetter dg = new DataGetter(Authentication.mOkHttpClient, request);
-        Thread thread =new Thread(dg);
-        thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+
+    public Track getTrack(String trackID) {
+        Track ret = new Track();
+        final Request request = new Request.Builder()
+                .url("https://api.spotify.com/v1/tracks/" + trackID)
+                .addHeader("Authorization", "Bearer " + mAccessToken)
+                .build();
+        JsonObject jsonObject = JsonParser.parseString(retJSON(request)).getAsJsonObject();
+        ret.setName(jsonObject.get("name").getAsString());
+        ret.setAlbumID(jsonObject.getAsJsonObject("album").get("id").getAsString());
+        ArrayList<String> artistIDs = new ArrayList<>();
+        for (JsonElement artist : jsonObject.getAsJsonArray("artists")) {
+            artistIDs.add(artist.getAsJsonObject().get("id").getAsString());
         }
-        return dg.getValue();
+        ret.setArtistsIDs(artistIDs);
+        ret.setLength(jsonObject.get("duration_ms").getAsInt());
+        ret.setId(jsonObject.get("id").getAsString());
+        ret.setPreviewUrl(jsonObject.get("preview_url").getAsString());
+        return ret;
     }
 }

@@ -1,32 +1,13 @@
 package com.example.wrappedanytime.spotify.Datatypes;
 
 public class User {
-    public static class ProfilePic {
-        String url;
-        int height, width;
-
-        public ProfilePic(String url, int height, int width) {
-            this.url = url;
-            this.height = height;
-            this.width = width;
-        }
-
-        @Override
-        public String toString() {
-            return "ProfilePic{" +
-                    "url='" + url + '\'' +
-                    "\n height=" + height +
-                    "\n width=" + width +
-                    '}';
-        }
-    }
     private String displayName;
     private String id;
-    private ProfilePic pfp;
+    private Image pfp;
     private String uri;
     private String email;
 
-    public User(String displayName, String id, ProfilePic pfp, String uri, String email) {
+    public User(String displayName, String id, Image pfp, String uri, String email) {
         this.displayName = displayName;
         this.id = id;
         this.pfp = pfp;
@@ -62,11 +43,11 @@ public class User {
         this.email = email;
     }
 
-    public ProfilePic getPfp() {
+    public Image getPfp() {
         return pfp;
     }
 
-    public void setPfp(ProfilePic pfp) {
+    public void setPfp(Image pfp) {
         this.pfp = pfp;
     }
 
