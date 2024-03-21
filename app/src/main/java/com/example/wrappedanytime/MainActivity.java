@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         dataRetriever = new SpotifyData(MainActivity.this);
         setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
+        /**binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("myLog", "before user call");
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("myLog", "after user call");
 
             }
-        });
+        });**/ // believe this is just the email icon
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
