@@ -1,5 +1,7 @@
 package com.example.wrappedanytime.firebasewrapper;
 
+import androidx.annotation.NonNull;
+
 import com.example.wrappedanytime.firebasewrapper.data.UserData;
 import com.example.wrappedanytime.firebasewrapper.data.WrappedData;
 import com.google.android.gms.tasks.Task;
@@ -20,18 +22,21 @@ public class FirestoreWrapper {
     // TODO: need to verify connection is valid before making calls
     private FirebaseFirestore db;
     private final CollectionReference userCollection;
+    private final CollectionReference wrappedCollection;
 
     public FirestoreWrapper() {
         db = FirebaseFirestore.getInstance();
         userCollection = db.collection("users");
+        wrappedCollection = db.collection("wrappeds");
         cachedUserData = new HashMap<>();
         cachedWrappedData = new HashMap<>();
     }
 
     // Used only for testing
-    public FirestoreWrapper(String userCollectionName) {
+    public FirestoreWrapper(String userCollectionName, String wrappedCollectionName) {
         db = FirebaseFirestore.getInstance();
         userCollection = db.collection(userCollectionName);
+        wrappedCollection = db.collection(wrappedCollectionName);
         cachedUserData = new HashMap<>();
         cachedWrappedData = new HashMap<>();
     }

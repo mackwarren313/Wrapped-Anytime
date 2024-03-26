@@ -21,7 +21,7 @@ public class FirestoreUnitTest {
     // check if failure is returned. for now test will always pass. still is required
     @Test
     public void testAddUser (){
-        this.fdb = new FirestoreWrapper("test-user-collection");
+        this.fdb = new FirestoreWrapper("test-user-collection", null);
         this.userData = new UserData();
         this.userData.setName("coolUser");
         this.userData.setUserId(UUID.randomUUID());
