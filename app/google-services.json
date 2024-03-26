@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "525091780625",
+    "project_id": "wrapped-anytime",
+    "storage_bucket": "wrapped-anytime.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525091780625:android:8f1bfcc4f5fa1dfcddd9b0",
+        "android_client_info": {
+          "package_name": "com.example.wrappedanytime"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZW3rQMcPzMeqYwuFfs-v5Wugmx3yF-q0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
