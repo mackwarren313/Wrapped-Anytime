@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         dataRetriever = new SpotifyData(MainActivity.this);
         setSupportActionBar(binding.appBarMain.toolbar);
+        User user = dataRetriever.getUser();
+        Log.d("userDataLog", user.toString());
         /**binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
