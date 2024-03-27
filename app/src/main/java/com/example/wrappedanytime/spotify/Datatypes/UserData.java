@@ -1,6 +1,9 @@
 package com.example.wrappedanytime.spotify.Datatypes;
 
 public class UserData {
+    public enum TimeRange {
+        SHORT, MEDIUM, LONG
+    }
 
     private String userID;
     private Track[] topTracks;

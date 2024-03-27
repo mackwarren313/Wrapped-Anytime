@@ -73,92 +73,25 @@ public class SpotifyData {
         return dg.getValue();
     }
     public User getUser() {
-        User ret = new User();
         final Request request = new Request.Builder()
                 .url("https://api.spotify.com/v1/me")
                 .addHeader("Authorization", "Bearer " + mAccessToken)
                 .build();
-        JsonElement jsonElement = JsonParser.parseString(retJSON(request));
-        if (jsonElement.isJsonObject()) {
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
-            if (jsonObject.has("display_name")) {
-                String name = jsonObject.get("display_name").getAsString();
-                ret.setDisplayName(name);
-            }
-            if (jsonObject.has("id")) {
-                String id = jsonObject.get("id").getAsString();
-                ret.setId(id);
-            }
-            if (jsonObject.has("uri")) {
-                String uri = jsonObject.get("uri").getAsString();
-                ret.setUri(uri);
-            }
-            if (jsonObject.has("images")) {
-                JsonArray jsonArray = jsonObject.getAsJsonArray("images");
-                JsonObject largestImage = jsonArray.get(jsonArray.size()-1).getAsJsonObject();
-                ret.setPfp(new Image(largestImage));
-            }
-            if (jsonObject.has("email")) {
-                String email = jsonObject.get("email").getAsString();
-                ret.setEmail(email);
-            }
-        }
-
-        return ret;
+        return new User(retJSON(request));
     }
 
     public Track getTrack(String trackID) {
-        Track ret = new Track();
         final Request request = new Request.Builder()
-                .url("https://api.spotify.com/v1/tracks/" + trackID)
-                .addHeader("Authorization", "Bearer " + mAccessToken)
-                .build();
-        JsonObject jsonObject = JsonParser.parseString(retJSON(request)).getAsJsonObject();
-        ret.setName(jsonObject.get("name").getAsString());
-        ret.setAlbumID(jsonObject.getAsJsonObject("album").get("id").getAsString());
-        ArrayList<String> artistIDs = new ArrayList<>();
-        for (JsonElement artist : jsonObject.getAsJsonArray("artists")) {
-            artistIDs.add(artist.getAsJsonObject().get("id").getAsString());
-        }
-        ret.setArtistsIDs(artistIDs);
-        ret.setLength(jsonObject.get("duration_ms").getAsInt());
-        ret.setId(jsonObject.get("id").getAsString());
-        ret.setPreviewUrl(jsonObject.get("preview_url").getAsString());
-        return ret;
+            .url("https://api.spotify.com/v1/tracks/" + trackID)
+            .addHeader("Authorization", "Bearer " + mAccessToken)
+            .build();
+        return new Track(retJSON(request));
     }
     public Album getAlbum(String albumID) {
-        Album ret = new Album();
         final Request request = new Request.Builder()
                 .url("https://api.spotify.com/v1/albums/" + albumID)
                 .addHeader("Authorization", "Bearer " + mAccessToken)
                 .build();
-        JsonObject jsonObject = JsonParser.parseString(retJSON(request)).getAsJsonObject();
-        ret.setId(jsonObject.get("id").getAsString());
-        ret.setName(jsonObject.get("name").getAsString());
-        ret.setTotal_tracks(jsonObject.get("total_tracks").getAsInt());
-
-        JsonArray images = jsonObject.getAsJsonArray("images");
-        JsonObject largestImage = images.get(0).getAsJsonObject();
-        ret.setCoverArt(new Image(largestImage));
-
-        ArrayList<String> artistIDs = new ArrayList<>();
-        for (JsonElement artist : jsonObject.getAsJsonArray("artists")) {
-            artistIDs.add(artist.getAsJsonObject().get("id").getAsString());
-        }
-        ret.setArtistIDs(artistIDs);
-
-        ArrayList<String> trackIds = new ArrayList<>();
-        for (JsonElement track : jsonObject.getAsJsonObject("tracks").getAsJsonArray("items")) {
-            trackIds.add(track.getAsJsonObject().get("id").getAsString());
-        }
-        ret.setTrackIDs(trackIds);
-
-        ArrayList<String> genres = new ArrayList<>();
-        for (JsonElement genre : jsonObject.getAsJsonArray("genres")) {
-            genres.add(genre.getAsString());
-        }
-        ret.setGenres(genres);
-
-        return ret;
+        return new Album(retJSON(request));
     }
 }
