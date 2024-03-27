@@ -1,35 +1,43 @@
 package com.example.wrappedanytime.spotify.Datatypes;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class UserData {
     public enum TimeRange {
         SHORT, MEDIUM, LONG
     }
-
+    private Map<TimeRange, String>  timeRangeMap = new HashMap<>();
     private String userID;
-    private Track[] topTracks;
-    private String[] topArtists;
+    private List<Track> topTracks;
+    private List<String> topArtists;
     private String topGenre;
 
     public UserData (String userID, Track[] topTracks, String[] topArtists, String topGenre) {
         this.userID = userID;
-        this.topTracks = topTracks;
-        this.topArtists = topArtists;
+        this.topTracks = new ArrayList<>();
+        this.topArtists = new ArrayList<>();
         this.topGenre = topGenre;
+        timeRangeMap.put(TimeRange.SHORT, "short_term");
+        timeRangeMap.put(TimeRange.MEDIUM, "medium_term");
+        timeRangeMap.put(TimeRange.LONG, "long_term");
     }
 
     public UserData() { this(null, null, null, null); }
 
-    public Track[] getTopTracks() { return topTracks; }
+    public List<Track> getTopTracks() { return topTracks; }
 
-    public String[] getTopArtists() { return topArtists; }
+    public List<String> getTopArtists() { return topArtists; }
 
     public String getTopGenre() { return topGenre; }
 
     public String getUserID() { return userID; }
 
-    public void setTopTracks(Track[] topTracks) { this.topTracks = topTracks; }
+    public void setTopTracks(List<Track> topTracks) { this.topTracks = topTracks; }
 
-    public void setTopArtists(String[] topArtists) { this.topArtists = topArtists; }
+    public void setTopArtists(List<String> topArtists) { this.topArtists = topArtists; }
 
     public void setTopGenre(String topGenre) { this.topGenre = topGenre; }
 

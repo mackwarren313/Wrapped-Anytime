@@ -9,9 +9,11 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.Toast;
 
 import com.example.wrappedanytime.spotify.Datatypes.Album;
+import com.example.wrappedanytime.spotify.Datatypes.Artist;
 import com.example.wrappedanytime.spotify.Datatypes.Image;
 import com.example.wrappedanytime.spotify.Datatypes.Track;
 import com.example.wrappedanytime.spotify.Datatypes.User;
+import com.example.wrappedanytime.spotify.Datatypes.UserData;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -93,5 +95,12 @@ public class SpotifyData {
                 .addHeader("Authorization", "Bearer " + mAccessToken)
                 .build();
         return new Album(retJSON(request));
+    }
+    public Artist getArtist(String id) {
+        final Request request = new Request.Builder()
+                .url("https://api.spotify.com/v1/artists/" + id)
+                .addHeader("Authorization", "Bearer " + mAccessToken)
+                .build();
+        return new Artist(retJSON(request));
     }
 }
