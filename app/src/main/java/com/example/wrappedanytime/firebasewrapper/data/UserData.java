@@ -1,10 +1,11 @@
 package com.example.wrappedanytime.firebasewrapper.data;
 
+import java.util.Map;
 import java.util.UUID;
 
-public class UserData {
+public class UserData extends FirebaseItem {
     private String name;
-    private UUID userId;
+    private UUID id;
     private String spotifyId;
 
     // TODO: wrapped list
@@ -17,12 +18,12 @@ public class UserData {
         this.name = name;
     }
 
-    public UUID getUserId() {
-        return userId;
+    public UUID getId() {
+        return id;
     }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getSpotifyId() {
@@ -36,8 +37,13 @@ public class UserData {
     @Override
     public boolean equals(Object o){
         UserData otherUser = (UserData) o;
-        return ! ( this.userId.equals(otherUser.getUserId())
+        return ! ( this.id.equals(otherUser.getId())
                 && this.name.equals(otherUser.getName())
                 && this.spotifyId.equals(otherUser.getSpotifyId())) ;
+    }
+
+    @Override
+    public Map<UUID, UserData> toMap() {
+        return null;
     }
 }
