@@ -1,5 +1,6 @@
 package com.example.wrappedanytime.firebasewrapper.data;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -43,7 +44,10 @@ public class UserData extends FirebaseItem {
     }
 
     @Override
-    public Map<UUID, UserData> toMap() {
-        return null;
+    public Map<String, Object> toMap() {
+        return new HashMap<String, Object>() {{
+            put("name", getName());
+            put("spotifyId", getSpotifyId());
+        }};
     }
 }

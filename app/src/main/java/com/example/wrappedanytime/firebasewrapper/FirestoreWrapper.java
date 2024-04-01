@@ -19,17 +19,18 @@ public class FirestoreWrapper {
     // TODO: need to verify connection is valid before making calls
     private FirebaseFirestore db;
     public final FirestoreCollection<UserData> userCollection;
+    public final FirestoreCollection<WrappedData> wrappedCollection;
 
     public FirestoreWrapper() {
         db = FirebaseFirestore.getInstance();
         userCollection = new FirestoreCollection<>(db.collection("users"));
-//        wrappedCollection = db.collection("wrappeds");
+        wrappedCollection = new FirestoreCollection<>(db.collection("wraps"));
     }
 
     // Used only for testing
     public FirestoreWrapper(String userCollectionName, String wrappedCollectionName) {
         db = FirebaseFirestore.getInstance();
         userCollection = new FirestoreCollection<>(db.collection(userCollectionName));
-//        wrappedCollection = db.collection(wrappedCollectionName);
+        wrappedCollection = new FirestoreCollection<>(db.collection(userCollectionName));
     }
 }

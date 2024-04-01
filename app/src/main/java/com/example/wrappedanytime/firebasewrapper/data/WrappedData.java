@@ -1,13 +1,14 @@
 package com.example.wrappedanytime.firebasewrapper.data;
 
-import java.time.DateTimeException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
-public class WrappedData {
+public class WrappedData extends FirebaseItem{
     private String userId;
-    private UUID wrappedId;
+    private UUID id;
     private Date dataTimeCreated; // enforce time stamp?
 
     private List<String> topArtistSpotifyURI;
@@ -23,12 +24,12 @@ public class WrappedData {
         this.userId = userId;
     }
 
-    public UUID getWrappedId() {
-        return wrappedId;
+    public UUID getId() {
+        return id;
     }
 
-    public void setWrappedId(UUID wrappedId) {
-        this.wrappedId = wrappedId;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public Date getDataTimeCreated() {
@@ -69,5 +70,17 @@ public class WrappedData {
 
     public void setMinutesListened(long minutesListened) {
         this.minutesListened = minutesListened;
+    }
+
+    @Override
+    public Map<String, Object> toMap() {
+        return new HashMap<String, Object>() {{
+            put("userId", getUserId());
+            put("dataTimeCreated", getDataTimeCreated());
+            put("topArtistSpotifyURI", getTopArtistSpotifyURI());
+            put("topSongsSpotifyURI", getTopSongsSpotifyURI());
+            put("topGenre", getTopGenre());
+            put("minutesListened", getMinutesListened());
+        }};
     }
 }

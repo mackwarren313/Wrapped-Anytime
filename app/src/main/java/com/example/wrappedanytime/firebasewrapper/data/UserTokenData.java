@@ -1,10 +1,13 @@
 package com.example.wrappedanytime.firebasewrapper.data;
 
+import java.util.Map;
 import java.util.UUID;
 
-public class UserTokenData {
+public class UserTokenData extends FirebaseItem {
+
+    private UUID id;
     private UUID userId;
-//    private String token;
+//    private String token; ?
 
     public UUID getUserId() {
         return userId;
@@ -12,5 +15,21 @@ public class UserTokenData {
 
     public void setUserId(UUID userId) {
         this.userId = userId;
+    }
+
+
+    @Override
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    @Override
+    public UUID getId() {
+        return id;
+    }
+
+    @Override
+    public Map<String, Object> toMap() {
+        return null;
     }
 }

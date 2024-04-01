@@ -24,23 +24,23 @@ public class FirestoreUnitTest {
         this.fdb = new FirestoreWrapper("test-user-collection", null);
         this.userData = new UserData();
         this.userData.setName("coolUser");
-        this.userData.setUserId(UUID.randomUUID());
+        this.userData.setId(UUID.randomUUID());
         this.userData.setSpotifyId("imagine-this-is-an-id");
 
-        fdb.putUser(userData);
+        fdb.userCollection.putItem(userData);
         assert(true);
     }
 
     @Test
     public void testGetUser(){
-        UserData userData = fdb.getUser(this.userData.getUserId());
+        UserData userData = fdb.userCollection.getItem(this.userData.getId());
         assert(userData.equals(this.userData));
     }
 
     @Test
     public void testDeleteUser(){
-        fdb.removeUser(this.userData.getUserId());
-        assert(fdb.getUser(this.userData.getUserId()) == null);
+        fdb.userCollection.removeItem(this.userData.getId());
+        assert(fdb.userCollection.getItem(this.userData.getId()) == null);
     }
 
 }

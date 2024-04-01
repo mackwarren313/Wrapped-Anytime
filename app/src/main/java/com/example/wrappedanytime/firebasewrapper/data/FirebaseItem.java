@@ -7,5 +7,5 @@ public abstract class FirebaseItem {
     public abstract void setId(UUID id);
     public abstract UUID getId();
 
-    public abstract Map toMap();
+    public abstract Map<String, Object> toMap();
 }

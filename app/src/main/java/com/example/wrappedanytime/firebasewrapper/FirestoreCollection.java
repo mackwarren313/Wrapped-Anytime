@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-// abstract if there are some things that need to be hardcoded
+// generic firestore collection for data items
 public class FirestoreCollection<T extends FirebaseItem> {
     private final CollectionReference cr;
     private final Map<UUID, T> cachedItemData;
