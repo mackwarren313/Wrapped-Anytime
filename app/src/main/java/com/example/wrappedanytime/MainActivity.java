@@ -3,15 +3,13 @@ package com.example.wrappedanytime;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
-import android.widget.TextView;
 
+import com.example.wrappedanytime.firebasewrapper.FirestoreDatabase;
+import com.example.wrappedanytime.firebasewrapper.data.UserData;
 import com.example.wrappedanytime.spotify.Authentication;
 import com.example.wrappedanytime.spotify.Datatypes.User;
 import com.example.wrappedanytime.spotify.SpotifyData;
-import com.example.wrappedanytime.ui.home.HomeViewModel;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -23,14 +21,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wrappedanytime.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.UUID;
 
+public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private SpotifyData dataRetriever;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (Authentication.getAccessToken() == null) {
             Authentication.getToken(MainActivity.this);
         } else {

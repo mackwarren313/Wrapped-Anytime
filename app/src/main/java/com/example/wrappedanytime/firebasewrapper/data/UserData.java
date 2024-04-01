@@ -50,4 +50,12 @@ public class UserData extends FirebaseItem {
             put("spotifyId", getSpotifyId());
         }};
     }
+
+    public UserData(){}
+
+    public UserData(String name, UUID id, String spotifyId) {
+        this.name = name;
+        this.id = id;
+        this.spotifyId = spotifyId;
+    }
 }
