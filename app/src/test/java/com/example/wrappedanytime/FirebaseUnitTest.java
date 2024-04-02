@@ -4,7 +4,7 @@ import org.junit.Test;
 
 public class FirebaseUnitTest {
 
-    @Test
-    public void testFirebaseConnection(){}
+//    @Test
+//    public void testFirebaseConnection(){}
 
 }
