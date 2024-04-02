@@ -13,7 +13,6 @@ import com.example.wrappedanytime.spotify.Datatypes.Artist;
 import com.example.wrappedanytime.spotify.Datatypes.Image;
 import com.example.wrappedanytime.spotify.Datatypes.Track;
 import com.example.wrappedanytime.spotify.Datatypes.User;
-import com.example.wrappedanytime.spotify.Datatypes.UserData;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
