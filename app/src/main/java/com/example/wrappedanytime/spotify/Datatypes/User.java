@@ -36,35 +36,9 @@ public class User {
         this.timeRange = timeRange;
 
     }
+
     public User() {
         this(null, null, null, null, null, null, null, null, null);
-    }
-    public User(String json) {
-        JsonElement jsonElement = JsonParser.parseString(json);
-        if (jsonElement.isJsonObject()) {
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
-            if (jsonObject.has("display_name")) {
-                String name = jsonObject.get("display_name").getAsString();
-                this.setDisplayName(name);
-            }
-            if (jsonObject.has("id")) {
-                String id = jsonObject.get("id").getAsString();
-                this.setId(id);
-            }
-            if (jsonObject.has("uri")) {
-                String uri = jsonObject.get("uri").getAsString();
-                this.setUri(uri);
-            }
-            if (jsonObject.has("images")) {
-                JsonArray jsonArray = jsonObject.getAsJsonArray("images");
-                JsonObject largestImage = jsonArray.get(jsonArray.size()-1).getAsJsonObject();
-                this.setPfp(new Image(largestImage));
-            }
-            if (jsonObject.has("email")) {
-                String email = jsonObject.get("email").getAsString();
-                this.setEmail(email);
-            }
-        }
     }
 
     public String getDisplayName() {

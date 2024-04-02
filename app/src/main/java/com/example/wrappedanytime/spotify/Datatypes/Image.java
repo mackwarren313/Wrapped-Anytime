@@ -11,12 +11,6 @@ public class Image {
         this.height = height;
         this.width = width;
     }
-    public Image(JsonObject object) {
-        this.url = object.get("url").getAsString();
-        this.height = object.get("height").getAsInt();
-        this.width = object.get("width").getAsInt();
-    }
-
     @Override
     public String toString() {
         return "ProfilePic{" +

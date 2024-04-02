@@ -28,19 +28,6 @@ public class Track {
     public Track() {
         this(null, null, null, 0, null, null);
     }
-    public Track(String json) {
-        JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
-        this.setName(jsonObject.get("name").getAsString());
-        this.setAlbumID(jsonObject.getAsJsonObject("album").get("id").getAsString());
-        ArrayList<String> artistIDs = new ArrayList<>();
-        for (JsonElement artist : jsonObject.getAsJsonArray("artists")) {
-            artistIDs.add(artist.getAsJsonObject().get("id").getAsString());
-        }
-        this.setArtistsIDs(artistIDs);
-        this.setLength(jsonObject.get("duration_ms").getAsInt());
-        this.setId(jsonObject.get("id").getAsString());
-        this.setPreviewUrl(jsonObject.get("preview_url").getAsString());
-    }
     public String getName() {
         return name;
     }

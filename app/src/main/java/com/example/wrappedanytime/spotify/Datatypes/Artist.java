@@ -23,31 +23,6 @@ public class Artist {
     public Artist() {
         this(null, null, null, null);
     }
-    public Artist(String json) {
-        JsonElement jsonElement = JsonParser.parseString(json);
-        if (jsonElement.isJsonObject()) {
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
-            if (jsonObject.has("name")) {
-                String name = jsonObject.get("name").getAsString();
-                this.setName(name);
-            }
-            if (jsonObject.has("id")) {
-                String id = jsonObject.get("id").getAsString();
-                this.setId(id);
-            }
-            if (jsonObject.has("images")) {
-                JsonArray jsonArray = jsonObject.getAsJsonArray("images");
-                JsonObject largestImage = jsonArray.get(jsonArray.size()-1).getAsJsonObject();
-                this.setImage(new Image(largestImage));
-            }
-            if (jsonObject.has("genres")) {
-                JsonArray jsonArray = jsonObject.getAsJsonArray("genres");
-                for (JsonElement je : jsonArray) {
-                    this.genres.add(je.getAsString());
-                }
-            }
-        }
-    }
 
     public String getId() {
         return id;

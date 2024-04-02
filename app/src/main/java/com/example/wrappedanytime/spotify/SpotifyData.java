@@ -32,6 +32,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class SpotifyData {
+    private final Gson gson = new Gson();
     private Activity activity;
     public SpotifyData(Activity activity) {
         this.activity = activity;
@@ -64,7 +65,7 @@ public class SpotifyData {
     }
     private String retJSON(Request request) {
         DataGetter dg = new DataGetter(Authentication.mOkHttpClient, request);
-        Thread thread =new Thread(dg);
+        Thread thread = new Thread(dg);
         thread.start();
         try {
             thread.join();
@@ -78,7 +79,9 @@ public class SpotifyData {
                 .url("https://api.spotify.com/v1/me")
                 .addHeader("Authorization", "Bearer " + mAccessToken)
                 .build();
-        return new User(retJSON(request));
+        // TODO: check if error
+        // otherwise
+        return gson.fromJson( retJSON(request), User.class);
     }
 
     public Track getTrack(String trackID) {
@@ -86,20 +89,20 @@ public class SpotifyData {
             .url("https://api.spotify.com/v1/tracks/" + trackID)
             .addHeader("Authorization", "Bearer " + mAccessToken)
             .build();
-        return new Track(retJSON(request));
+        return gson.fromJson(retJSON(request), Track.class);
     }
     public Album getAlbum(String albumID) {
         final Request request = new Request.Builder()
                 .url("https://api.spotify.com/v1/albums/" + albumID)
                 .addHeader("Authorization", "Bearer " + mAccessToken)
                 .build();
-        return new Album(retJSON(request));
+        return gson.fromJson(retJSON(request), Album.class);
     }
     public Artist getArtist(String id) {
         final Request request = new Request.Builder()
                 .url("https://api.spotify.com/v1/artists/" + id)
                 .addHeader("Authorization", "Bearer " + mAccessToken)
                 .build();
-        return new Artist(retJSON(request));
+        return gson.fromJson(retJSON(request), Artist.class);
     }
 }
