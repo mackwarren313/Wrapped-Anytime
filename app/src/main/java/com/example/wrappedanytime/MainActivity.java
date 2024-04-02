@@ -22,11 +22,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wrappedanytime.databinding.ActivityMainBinding;
+import com.example.wrappedanytime.databinding.FragmentAppLoginBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private ActivityMainBinding binding;
+    //private ActivityMainBinding binding;
+    private FragmentAppLoginBinding binding;
     private SpotifyData dataRetriever;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    protected void onCreate(Bundle savedInstanceState) {
+        //super.onCreate(savedInstanceState);
+        binding = FragmentAppLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        tokenBtn.setOnClickListener((v) -> {
+            getToken();
+        });
+
+        codeBtn.setOnClickListener((v) -> {
+            getCode();
+        });
+
+        if (Authentication.getAccessToken() == null) {
+            Authentication.getToken(MainActivity.this);
+        } else {
+            afterAuthWork();
+        }
+
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -46,12 +70,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void afterAuthWork() {
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = FragmentAppLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        dataRetriever = new SpotifyData(MainActivity.this);
-        setSupportActionBar(binding.appBarMain.toolbar);
-        User user = dataRetriever.getUser();
-        Log.d("userDataLog", user.toString());
+        //dataRetriever = new SpotifyData(MainActivity.this);
+        //setSupportActionBar(binding.appBarMain.toolbar);
+        //User user = dataRetriever.getUser();
+        //Log.d("userDataLog", user.toString());
         /**binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
