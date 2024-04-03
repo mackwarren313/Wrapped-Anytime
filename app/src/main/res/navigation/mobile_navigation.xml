@@ -22,4 +22,13 @@
         android:name="com.example.wrappedanytime.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/appLoginFragment"
+        android:name="com.example.wrappedanytime.ui.login.AppLoginFragment"
+        android:label="fragment_app_login"
+        tools:layout="@layout/fragment_app_login" >
+        <action
+            android:id="@+id/action_appLoginFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
 </navigation>

@@ -13,13 +13,29 @@
         android:theme="@style/Theme.WrappedAnytime"
         tools:targetApi="31">
         <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".MainActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/Theme.WrappedAnytime.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <data android:host="auth" android:scheme="wrapped-anytime"/>
+
+                <data
+                    android:host="auth"
+                    android:scheme="wrapped-anytime" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
