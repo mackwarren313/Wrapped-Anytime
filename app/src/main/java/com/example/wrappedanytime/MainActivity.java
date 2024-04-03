@@ -22,7 +22,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wrappedanytime.databinding.ActivityMainBinding;
-import com.example.wrappedanytime.databinding.FragmentAppLoginBinding;
 
 public class MainActivity extends AppCompatActivity {
 
