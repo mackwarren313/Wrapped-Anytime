@@ -42,22 +42,10 @@ public class SignUpActivity extends AppCompatActivity {
 
                 if (user.isEmpty()) {
                     signUpEmail.setError("Email cannot be empty");
-                }
-
-                if (pass.isEmpty()) {
+                } else if (pass.isEmpty()) {
                     signUpPassword.setError("Password cannot be empty");
                 } else {
-                    auth.createUserWithEmailAndPassword(user,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(SignUpActivity.this, "Signup Successful", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
-                            } else {
-                                Toast.makeText(SignUpActivity.this, "Signup Failed", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                    createUser(user, pass);
                 }
             }
         });
@@ -68,5 +56,22 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
             }
         });
+    }
+
+    private void createUser(String user, String pass) {
+        // Create user with Firebase authentication
+        auth.createUserWithEmailAndPassword(user,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(SignUpActivity.this, "Signup Successful", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                } else {
+                    Toast.makeText(SignUpActivity.this, "Signup Failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        // Save user data in Firestore
     }
 }

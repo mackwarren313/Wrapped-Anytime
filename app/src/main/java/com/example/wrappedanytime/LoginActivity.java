@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (Patterns.EMAIL_ADDRESS.matcher(email).matches()){
                     loginEmail.setError("Please enter a valid email");
                 } else {
-                    createUser(email, pass);
+                    loginUser(email, pass);
                 }
             }
         });
@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void createUser(String email, String pass){
+    private void loginUser(String email, String pass){
         auth.createUserWithEmailAndPassword(email,pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                 @Override
                 public void onSuccess(AuthResult authResult) {
