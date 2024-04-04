@@ -43,31 +43,15 @@ public class LoginActivity extends AppCompatActivity {
                 String email = loginEmail.getText().toString().trim();
                 String pass = loginPassword.getText().toString().trim();
 
-                if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    if (!pass.isEmpty()) {
-                        auth.createUserWithEmailAndPassword(email,pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                            @Override
-                            public void onSuccess(AuthResult authResult) {
-                                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                finish();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    } else {
-                        loginPassword.setError("Password cannot be empty");
-                    }
-
+                if (pass.isEmpty()){
+                    loginPassword.setError("Password cannot be empty");
                 } else if (email.isEmpty()) {
                     loginEmail.setError("Email cannot be empty");
-                } else {
+                } else if (Patterns.EMAIL_ADDRESS.matcher(email).matches()){
                     loginEmail.setError("Please enter a valid email");
+                } else {
+                    loginUser(email, pass);
                 }
-
             }
         });
 
@@ -77,5 +61,23 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
             }
         });
+    }
+
+    private void loginUser(String email, String pass){
+        auth.createUserWithEmailAndPassword(email,pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                @Override
+                public void onSuccess(AuthResult authResult) {
+                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
+                }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        /* TODO: Other actions here */
     }
 }
