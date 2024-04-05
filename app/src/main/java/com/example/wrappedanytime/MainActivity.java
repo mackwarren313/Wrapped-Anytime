@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Authentication.setToken("BQBzNZ8lJm0aHicLDA5P6RSVlVlXug1AP9E9gSu--kMP9x1Ants-TLgNpHfgTdoEOvNYuBwNGJp1Zw7nRJT9XoK4evBwVt36G5YjNfWwXMWW7fsjgSguscV_gyu1El8Tw6-yzu3tkN2dRres6QXO64xoQO0cXjmKKOqWn6RUKMR7j3QTqD4P6z6w2dktxP5qsnpAUkWSfA-iKg");
-        String token = "BQBzNZ8lJm0aHicLDA5P6RSVlVlXug1AP9E9gSu--kMP9x1Ants-TLgNpHfgTdoEOvNYuBwNGJp1Zw7nRJT9XoK4evBwVt36G5YjNfWwXMWW7fsjgSguscV_gyu1El8Tw6-yzu3tkN2dRres6QXO64xoQO0cXjmKKOqWn6RUKMR7j3QTqD4P6z6w2dktxP5qsnpAUkWSfA-iKg";
+        String token = "";
+        //put your token here to test ig lol
         //Above token should be gotten via firebase, this is my perosnal token, don't leak it lmao
         if (!Authentication.testAuth(token, this)) {
             Authentication.getToken(MainActivity.this);
