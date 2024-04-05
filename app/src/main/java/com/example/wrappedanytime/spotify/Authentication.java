@@ -21,7 +21,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 public class Authentication {
     public static final String CLIENT_ID = "0c8bef22a41149e383a987e5bcb4e03a";
-    private static final String CLIENT_SECRET = "a24fe43f52cb4ffe9bd52e9fcf4b72ba";
     public static final String REDIRECT_URI = "wrapped-anytime://auth";
     public static final int AUTH_TOKEN_REQUEST_CODE = 0;
     public static final int AUTH_CODE_REQUEST_CODE = 1;
