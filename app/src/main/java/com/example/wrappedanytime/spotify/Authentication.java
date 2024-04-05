@@ -21,6 +21,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 public class Authentication {
     public static final String CLIENT_ID = "0c8bef22a41149e383a987e5bcb4e03a";
+    private static final String CLIENT_SECRET = "a24fe43f52cb4ffe9bd52e9fcf4b72ba";
     public static final String REDIRECT_URI = "wrapped-anytime://auth";
     public static final int AUTH_TOKEN_REQUEST_CODE = 0;
     public static final int AUTH_CODE_REQUEST_CODE = 1;
@@ -33,6 +34,9 @@ public class Authentication {
     public static void getToken(Activity activity) {
         final AuthorizationRequest request = getAuthenticationRequest(AuthorizationResponse.Type.TOKEN);
         AuthorizationClient.openLoginActivity(activity, AUTH_TOKEN_REQUEST_CODE, request);
+    }
+    public static void setToken(String token) {
+        mAccessToken = token;
     }
     public static String getAccessToken() {
         return mAccessToken;
@@ -50,7 +54,7 @@ public class Authentication {
     private static AuthorizationRequest getAuthenticationRequest(AuthorizationResponse.Type type) {
         return new AuthorizationRequest.Builder(CLIENT_ID, type, getRedirectUri().toString())
                 .setShowDialog(false)
-                .setScopes(new String[] { "user-read-email" }) // <--- Change the scope of your requested token here
+                .setScopes(new String[] { "user-read-email", "user-top-read"}) // <--- Change the scope of your requested token here
                 .setCampaign("your-campaign-token")
                 .build();
     }
@@ -61,5 +65,14 @@ public class Authentication {
         if (mCall != null) {
             mCall.cancel();
         }
+    }
+    public static boolean testAuth(String token, Activity activity) {
+        Request request = new Request.Builder()
+                .url("https://api.spotify.com/v1/me")
+                .addHeader("Authorization", "Bearer " + token)
+                .build();
+        String retVal = new SpotifyData(activity).retJSON(request);
+        if(retVal.contains("\"status\": 401")) return false;
+        return true;
     }
 }

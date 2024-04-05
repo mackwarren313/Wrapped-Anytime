@@ -30,10 +30,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (Authentication.getAccessToken() == null) {
+        //Authentication.setToken("BQBzNZ8lJm0aHicLDA5P6RSVlVlXug1AP9E9gSu--kMP9x1Ants-TLgNpHfgTdoEOvNYuBwNGJp1Zw7nRJT9XoK4evBwVt36G5YjNfWwXMWW7fsjgSguscV_gyu1El8Tw6-yzu3tkN2dRres6QXO64xoQO0cXjmKKOqWn6RUKMR7j3QTqD4P6z6w2dktxP5qsnpAUkWSfA-iKg");
+        String token = "BQBzNZ8lJm0aHicLDA5P6RSVlVlXug1AP9E9gSu--kMP9x1Ants-TLgNpHfgTdoEOvNYuBwNGJp1Zw7nRJT9XoK4evBwVt36G5YjNfWwXMWW7fsjgSguscV_gyu1El8Tw6-yzu3tkN2dRres6QXO64xoQO0cXjmKKOqWn6RUKMR7j3QTqD4P6z6w2dktxP5qsnpAUkWSfA-iKg";
+        //Above token should be gotten via firebase, this is my perosnal token, don't leak it lmao
+        if (!Authentication.testAuth(token, this)) {
             Authentication.getToken(MainActivity.this);
         } else {
+            Authentication.setToken(token);
             afterAuthWork();
         }
     }
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void afterAuthWork() {
+        Log.d("myLog", Authentication.getAccessToken());
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         dataRetriever = new SpotifyData(MainActivity.this);

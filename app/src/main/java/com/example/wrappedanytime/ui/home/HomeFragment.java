@@ -18,6 +18,7 @@ import com.example.wrappedanytime.spotify.Datatypes.Album;
 import com.example.wrappedanytime.spotify.Datatypes.Artist;
 import com.example.wrappedanytime.spotify.Datatypes.Track;
 import com.example.wrappedanytime.spotify.Datatypes.User;
+import com.example.wrappedanytime.spotify.Datatypes.UserData;
 import com.example.wrappedanytime.spotify.SpotifyData;
 
 import java.io.IOException;
@@ -44,8 +45,9 @@ public class HomeFragment extends Fragment {
          * This will return a User object. More objects coming.
          */
         SpotifyData dataRetriever = new SpotifyData(this.getActivity());
-        Artist artist = dataRetriever.getArtist("4j56EQDQu5XnL7R3E9iFJT");
-        homeViewModel.setText(artist.toString());
+        //Artist artist = dataRetriever.getArtist("4j56EQDQu5XnL7R3E9iFJT");
+        UserData userdata = dataRetriever.getUserData(UserData.TimeRange.MEDIUM);
+        homeViewModel.setText(userdata.getTopTracks().toString());
         return root;
     }
 
