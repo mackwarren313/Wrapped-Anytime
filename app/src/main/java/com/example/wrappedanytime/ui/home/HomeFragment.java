@@ -47,7 +47,7 @@ public class HomeFragment extends Fragment {
         SpotifyData dataRetriever = new SpotifyData(this.getActivity());
         //Artist artist = dataRetriever.getArtist("4j56EQDQu5XnL7R3E9iFJT");
         UserData userdata = dataRetriever.getUserData(UserData.TimeRange.MEDIUM);
-        homeViewModel.setText(userdata.getTopTracks().toString());
+        homeViewModel.setText(userdata.getTopGenre());
         return root;
     }
 

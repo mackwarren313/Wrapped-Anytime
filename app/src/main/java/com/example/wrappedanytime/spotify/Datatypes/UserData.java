@@ -8,9 +8,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class UserData {
     public enum TimeRange {
@@ -47,6 +49,22 @@ public class UserData {
             }
         }
         this.topTracks = topTracks;
+
+        Map<String, Integer> frequencyMap = new HashMap<>();
+        for (Artist a : topArtists) {
+            for(String genre : a.getGenres()) {
+                frequencyMap.put(genre, frequencyMap.getOrDefault(genre, 0) + 1);
+            }
+        }
+        int maxFrequency = Collections.max(frequencyMap.values());
+        List<String> mostCommonGenres = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : frequencyMap.entrySet()) {
+            if (entry.getValue() == maxFrequency) {
+                mostCommonGenres.add(entry.getKey());
+            }
+        }
+        Random random = new Random();
+        this.topGenre = mostCommonGenres.get(random.nextInt(mostCommonGenres.size()));
     }
     public List<Track> getTopTracks() { return topTracks; }
 
