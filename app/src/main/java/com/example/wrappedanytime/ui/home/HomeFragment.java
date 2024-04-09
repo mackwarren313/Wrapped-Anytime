@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.wrappedanytime.MainActivity;
+import com.example.wrappedanytime.R;
 import com.example.wrappedanytime.databinding.FragmentHomeBinding;
 import com.example.wrappedanytime.spotify.Datatypes.Album;
 import com.example.wrappedanytime.spotify.Datatypes.Artist;
@@ -27,6 +30,11 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private MediaPlayer mp;
+    private String username;
+    private String password;
+    EditText usernameText;
+    EditText passwordText;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
@@ -35,8 +43,17 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        usernameText = root.findViewById(R.id.Username);
+        passwordText = root.findViewById(R.id.Password);
+
+        Button createAccount = root.findViewById(R.id.create_account_button);
+        Button login = root.findViewById(R.id.login_button);
+
+        login.setOnClickListener(v -> {setLoginInfo();});
+
+
+//        final TextView textView = binding.textHome;
+//        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         /*Model of how to use the spotify data getter
          * At the top of your class's onCreateView, put:
          * SpotifyData dataRetriever = new SpotifyData(this.getActivity());
@@ -49,6 +66,11 @@ public class HomeFragment extends Fragment {
         UserData userdata = dataRetriever.getUserData(UserData.TimeRange.MEDIUM);
         homeViewModel.setText(userdata.getTopTracks().toString());
         return root;
+    }
+
+    private void setLoginInfo() {
+        password = passwordText.getText().toString();
+        username = usernameText.getText().toString();
     }
 
     @Override
