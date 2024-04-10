@@ -36,7 +36,7 @@ public class AccountsFragment extends Fragment {
 
     private FragmentAccountsBinding binding;
     RecyclerView accountsListView;
-    ArrayList<String> accounts;
+    public static ArrayList<UserData> accounts;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +46,9 @@ public class AccountsFragment extends Fragment {
         binding = FragmentAccountsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        loadFromDB();
+
+        //the change to the db happens in the buttons in the AccountsRecyclerAdaptor
         accountsListView = root.findViewById(R.id.top_artists_list);
         accountsListView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         accountsListView.setAdapter(new AccountsRecyclerAdapter(getContext().getApplicationContext(), accounts));
@@ -53,7 +56,11 @@ public class AccountsFragment extends Fragment {
         return root;
     }
 
-
+    public static void loadFromDB(){
+        //load from db in here
+        //something like FirstoreDatabase firestoreDatabase= new ...
+        //firestoreDatabase.loadFromDB
+    }
 
     @Override
     public void onDestroyView() {

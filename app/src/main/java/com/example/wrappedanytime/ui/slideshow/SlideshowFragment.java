@@ -14,7 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wrappedanytime.R;
 import com.example.wrappedanytime.databinding.FragmentSlideshowBinding;
+import com.example.wrappedanytime.spotify.Datatypes.Artist;
+import com.example.wrappedanytime.spotify.Datatypes.Track;
 import com.example.wrappedanytime.spotify.Datatypes.User;
+import com.example.wrappedanytime.spotify.Datatypes.UserData;
+import com.example.wrappedanytime.spotify.SpotifyData;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +28,13 @@ import java.util.List;
 public class SlideshowFragment extends Fragment{
 
     private FragmentSlideshowBinding binding;
+    SpotifyData dataRetriever = new SpotifyData(this.getActivity());
+    User user = dataRetriever.getUser();
+    UserData data = dataRetriever.getUserData(UserData.TimeRange.MEDIUM);
+    List<Artist> topArtistsData = data.getTopArtists();
+    List<Track> topTracksData = data.getTopTracks();
 
-    HoldSpotifyTop holdSpotifyTop = new HoldSpotifyTop();
-    ArrayList<String> topArtists = holdSpotifyTop.getTopArtists();
-    ArrayList <String> topTracks = holdSpotifyTop.getTopTracks();
-    String Genre = holdSpotifyTop.getTopGenre();
+    String Genre = data.getTopGenre();
     RecyclerView artistView;
     RecyclerView tracksView;
 
@@ -37,16 +45,22 @@ public class SlideshowFragment extends Fragment{
 
         binding = FragmentSlideshowBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        ArrayList<String> topArtists = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            topArtists.add(topArtistsData.get(i).getName());
+        }
+
+        ArrayList<String> topTracks = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            topTracks.add(topTracksData.get(i).getName());
+        }
 
         TextView welcome = root.findViewById(R.id.welcome_with_username);
-        welcome.setText(welcomeSetText());
+        welcome.setText("Welcome " + user.getDisplayName());
 
-        TextView minutesListened = root.findViewById(R.id.minutes_listened_tv);
-        welcome.setText(minutesSetText());
 
         TextView topGenre = root.findViewById(R.id.top_genre_tv);
-        welcome.setText(genreSetText());
-
+        topGenre.setText(data.getTopGenre());
 
 
         artistView = root.findViewById(R.id.top_artists_list);
@@ -58,18 +72,6 @@ public class SlideshowFragment extends Fragment{
         tracksView.setAdapter(new RecyclerAdapter(getContext().getApplicationContext(), topTracks));
 
         return root;
-    }
-
-    private CharSequence genreSetText() {
-        return holdSpotifyTop.getTopGenre();
-    }
-
-    private CharSequence minutesSetText() {
-        return holdSpotifyTop.getMinutesListened();
-    }
-
-    public CharSequence welcomeSetText(){
-        return "Welcome " + holdSpotifyTop.getUsername();
     }
     @Override
     public void onDestroyView() {

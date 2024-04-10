@@ -22,4 +22,10 @@
         android:name="com.example.wrappedanytime.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_account_list"
+        android:name="com.example.wrappedanytime.ui.accounts.AccountsFragment"
+        android:label="@string/menu_account_list"
+        tools:layout="@layout/fragment_accounts" />
 </navigation>

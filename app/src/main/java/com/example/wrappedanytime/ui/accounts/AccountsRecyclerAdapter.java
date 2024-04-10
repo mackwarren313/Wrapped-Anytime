@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wrappedanytime.R;
+import com.example.wrappedanytime.spotify.Datatypes.UserData;
 import com.example.wrappedanytime.ui.slideshow.RecyclerAdapter;
 
 import java.util.ArrayList;
@@ -18,10 +19,10 @@ import java.util.ArrayList;
 public class AccountsRecyclerAdapter extends RecyclerView.Adapter<AccountsRecyclerAdapter.MyViewHolder>{
 
     Context context;
-    private ArrayList<String> list;
+    private ArrayList<UserData> list;
 
 
-    public AccountsRecyclerAdapter(Context context, ArrayList<String> list){
+    public AccountsRecyclerAdapter(Context context, ArrayList<UserData> list){
         this.list = list;
         this.context = context;
     }
@@ -30,6 +31,7 @@ public class AccountsRecyclerAdapter extends RecyclerView.Adapter<AccountsRecycl
         private TextView accountName;
         private Button deleteButton;
         private Button loadButton;
+        UserData user;
         public MyViewHolder(final View view) {
             super(view);
             accountName = view.findViewById(R.id.account_name);
@@ -48,21 +50,27 @@ public class AccountsRecyclerAdapter extends RecyclerView.Adapter<AccountsRecycl
 
     @Override
     public void onBindViewHolder(@NonNull AccountsRecyclerAdapter.MyViewHolder holder, int position) {
+        UserData userData = list.get(position);
         holder.accountName.setText(list.get(position).toString());
+        holder.user = userData;
+
+        //I cant remember if we are storing a userdata or spotify data but i think its user data
+        //if userdata keep it as is, if its spotify data tell me and i can update the list and small things quickly
 
         holder.loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //update who the user is from accountName
-                //essientially sign in
+                //dont look at this one im working on how to update data retriever
             }
         });
 
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //delete from save form accountName
-                //remove from db
+                AccountsFragment.accounts.remove(holder.getAdapterPosition());
+                notifyDataSetChanged();
+                //remove from db here or more likely before removing from the accounts list but i made a user
+                //object for you to use as well
             }
         });
     }

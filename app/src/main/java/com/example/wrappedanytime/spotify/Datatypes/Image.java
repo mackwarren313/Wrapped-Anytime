@@ -17,6 +17,10 @@ public class Image {
         this.width = object.get("width").getAsInt();
     }
 
+    public String getUrl(){
+        return url;
+    }
+
     @Override
     public String toString() {
         return "ProfilePic{" +
