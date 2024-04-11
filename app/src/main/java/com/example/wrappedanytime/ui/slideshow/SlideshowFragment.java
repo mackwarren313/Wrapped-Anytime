@@ -9,12 +9,34 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.wrappedanytime.R;
 import com.example.wrappedanytime.databinding.FragmentSlideshowBinding;
+import com.example.wrappedanytime.spotify.Datatypes.Artist;
+import com.example.wrappedanytime.spotify.Datatypes.Track;
+import com.example.wrappedanytime.spotify.Datatypes.User;
+import com.example.wrappedanytime.spotify.Datatypes.UserData;
+import com.example.wrappedanytime.spotify.SpotifyData;
 
-public class SlideshowFragment extends Fragment {
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class SlideshowFragment extends Fragment{
 
     private FragmentSlideshowBinding binding;
+    SpotifyData dataRetriever = new SpotifyData(this.getActivity());
+    User user = dataRetriever.getUser();
+    UserData data = dataRetriever.getUserData(UserData.TimeRange.MEDIUM);
+    List<Artist> topArtistsData = data.getTopArtists();
+    List<Track> topTracksData = data.getTopTracks();
+
+    String Genre = data.getTopGenre();
+    RecyclerView artistView;
+    RecyclerView tracksView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -23,12 +45,34 @@ public class SlideshowFragment extends Fragment {
 
         binding = FragmentSlideshowBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        ArrayList<String> topArtists = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            topArtists.add(topArtistsData.get(i).getName());
+        }
 
-        final TextView textView = binding.textSlideshow;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        ArrayList<String> topTracks = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            topTracks.add(topTracksData.get(i).getName());
+        }
+
+        TextView welcome = root.findViewById(R.id.welcome_with_username);
+        welcome.setText("Welcome " + user.getDisplayName());
+
+
+        TextView topGenre = root.findViewById(R.id.top_genre_tv);
+        topGenre.setText(data.getTopGenre());
+
+
+        artistView = root.findViewById(R.id.top_artists_list);
+        artistView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        artistView.setAdapter(new RecyclerAdapter(getContext().getApplicationContext(), topArtists));
+
+        tracksView = root.findViewById(R.id.top_tracks_list);
+        tracksView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        tracksView.setAdapter(new RecyclerAdapter(getContext().getApplicationContext(), topTracks));
+
         return root;
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

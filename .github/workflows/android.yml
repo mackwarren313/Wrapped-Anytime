@@ -2,9 +2,15 @@ name: Android Build CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "workflow-testing" ]
   pull_request:
     branches: [ "main" ]
+
+permissions:
+  pull-requests: write
+  repository-projects: write
+  contents: write
+  issues: write
 
 jobs:
   build:
@@ -12,7 +18,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Setup Resources
+      uses: actions/checkout@v4
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # need to cache dependencies etc.
     - name: set up JDK 17
       uses: actions/setup-java@v3
       with:
@@ -22,5 +33,33 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew build
+    - name: Build
+      run: |
+        ./gradlew build --scan
+
+    - name: Handle Push Events
+      # handle push events
+      # needs to push all commits to new branch then revert changes from main
+      # TODO : condense commit messages 
+      # TODO : git rev-list --count returns inalid range. I think runner doesnt copy whole changes
+      if: ${{ failure() && github.event_name == 'push' && github.ref_name == 'main' }}
+      run: |
+        export PUSH_DEPTH=$(git rev-list --count ${{ github.event.before }}..${{ github.event.after }}) &&
+        git config --global user.name "Your Worklow... Probably" &&
+        git config --global user.email "zsalgado3@gatech.edu" &&
+        git checkout -b failed-build_${{ github.event.before }}-${{ github.event.after }} &&
+        git checkout main &&
+        git reset --soft HEAD~$PUSH_DEPTH &&
+        git checkout failed-build_${{ github.event.before }}-${{ github.event.after }} &&
+        git add -A &&
+        git commit -m "Failed push for hash \n hash ${{ github.event.before }} through ${{ github.event.after }} \n <summary>" &&
+        git push &&
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Handle PR Events
+      # handle pull request events
+      if: ${{ failure() && github.event_name == 'pull_request' }}
+      run: |
+        gh pr comment ${{ github.event.number }} --body <summary>
+

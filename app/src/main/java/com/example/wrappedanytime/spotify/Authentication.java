@@ -34,6 +34,9 @@ public class Authentication {
         final AuthorizationRequest request = getAuthenticationRequest(AuthorizationResponse.Type.TOKEN);
         AuthorizationClient.openLoginActivity(activity, AUTH_TOKEN_REQUEST_CODE, request);
     }
+    public static void setToken(String token) {
+        mAccessToken = token;
+    }
     public static String getAccessToken() {
         return mAccessToken;
     }
@@ -50,7 +53,7 @@ public class Authentication {
     private static AuthorizationRequest getAuthenticationRequest(AuthorizationResponse.Type type) {
         return new AuthorizationRequest.Builder(CLIENT_ID, type, getRedirectUri().toString())
                 .setShowDialog(false)
-                .setScopes(new String[] { "user-read-email" }) // <--- Change the scope of your requested token here
+                .setScopes(new String[] { "user-read-email", "user-top-read"}) // <--- Change the scope of your requested token here
                 .setCampaign("your-campaign-token")
                 .build();
     }
@@ -61,5 +64,14 @@ public class Authentication {
         if (mCall != null) {
             mCall.cancel();
         }
+    }
+    public static boolean testAuth(String token, Activity activity) {
+        Request request = new Request.Builder()
+                .url("https://api.spotify.com/v1/me")
+                .addHeader("Authorization", "Bearer " + token)
+                .build();
+        String retVal = new SpotifyData(activity).retJSON(request);
+        if(retVal.contains("error")) return false;
+        return true;
     }
 }

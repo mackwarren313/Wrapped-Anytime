@@ -1,6 +1,7 @@
 package com.example.wrappedanytime.spotify.Datatypes;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -39,7 +40,10 @@ public class Track {
         this.setArtistsIDs(artistIDs);
         this.setLength(jsonObject.get("duration_ms").getAsInt());
         this.setId(jsonObject.get("id").getAsString());
-        this.setPreviewUrl(jsonObject.get("preview_url").getAsString());
+        //this.setPreviewUrl(jsonObject.get("preview_url").getAsString());
+        if(!(jsonObject.get("preview_url") instanceof JsonNull)) {
+            this.setPreviewUrl(jsonObject.get("preview_url").getAsString());
+        }
     }
     public String getName() {
         return name;

@@ -25,6 +25,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -63,7 +65,7 @@ public class SpotifyData {
             return value;
         }
     }
-    private String retJSON(Request request) {
+    public String retJSON(Request request) {
         DataGetter dg = new DataGetter(Authentication.mOkHttpClient, request);
         Thread thread =new Thread(dg);
         thread.start();
@@ -103,4 +105,25 @@ public class SpotifyData {
                 .build();
         return new Artist(retJSON(request));
     }
+
+    public UserData getUserData(UserData.TimeRange timeRange) {
+        Map<UserData.TimeRange, String> timeRangeMap = new HashMap<>();
+        timeRangeMap.put(UserData.TimeRange.SHORT, "short_term");
+        timeRangeMap.put(UserData.TimeRange.MEDIUM, "medium_term");
+        timeRangeMap.put(UserData.TimeRange.LONG, "long_term");
+        Request request = new Request.Builder()
+            .url("https://api.spotify.com/v1/me/top/artists?time_range=" + timeRangeMap.get(timeRange))
+            .addHeader("Authorization", "Bearer " + mAccessToken)
+            .build();
+        String artistRet = retJSON(request);
+        request = new Request.Builder()
+                .url("https://api.spotify.com/v1/me/top/tracks?time_range=" + timeRangeMap.get(timeRange))
+                .addHeader("Authorization", "Bearer " + mAccessToken)
+                .build();
+        String trackRet = retJSON(request);
+        return new UserData(artistRet, trackRet);
+    }
+
+
+
 }
