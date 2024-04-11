@@ -69,6 +69,8 @@ public class AccountsRecyclerAdapter extends RecyclerView.Adapter<AccountsRecycl
             public void onClick(View v) {
                 AccountsFragment.accounts.remove(holder.getAdapterPosition());
                 notifyDataSetChanged();
+                //holder.use is the user
+                //holder.user another . function to call for top artists and genre and stuff
                 //remove from db here or more likely before removing from the accounts list but i made a user
                 //object for you to use as well
             }
