@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         dataRetriever = new SpotifyData(MainActivity.this);
+
         setSupportActionBar(binding.appBarMain.toolbar);
         User user = dataRetriever.getUser();
         Log.d("userDataLog", user.toString());

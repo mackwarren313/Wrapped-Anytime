@@ -71,7 +71,7 @@ public class Authentication {
                 .addHeader("Authorization", "Bearer " + token)
                 .build();
         String retVal = new SpotifyData(activity).retJSON(request);
-        if(retVal.contains("\"status\": 401")) return false;
+        if(retVal.contains("error")) return false;
         return true;
     }
 }
