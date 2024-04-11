@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 
-import com.example.wrappedanytime.firebasewrapper.FirestoreDatabase;
-import com.example.wrappedanytime.firebasewrapper.data.UserData;
 import com.example.wrappedanytime.spotify.Authentication;
 import com.example.wrappedanytime.spotify.Datatypes.User;
 import com.example.wrappedanytime.spotify.SpotifyData;
@@ -20,8 +18,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wrappedanytime.databinding.ActivityMainBinding;
-
-import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;

@@ -1,7 +1,6 @@
 package com.example.wrappedanytime.firebasewrapper;
 
-import com.example.wrappedanytime.firebasewrapper.data.FirebaseItem;
-import com.example.wrappedanytime.firebasewrapper.data.UserData;
+import com.example.wrappedanytime.firebasewrapper.data.FirebaseEntry;
 import com.google.android.gms.tasks.Task;
 import com.google.common.reflect.TypeToken;
 import com.google.firebase.firestore.CollectionReference;
@@ -12,7 +11,7 @@ import java.util.Map;
 import java.util.UUID;
 
 // generic firestore collection for data items
-public class FirestoreCollection<T extends FirebaseItem> {
+public class FirestoreCollection<T extends FirebaseEntry> {
     private final CollectionReference cr;
     private final Map<UUID, T> cachedItemData;
 

@@ -1,15 +1,28 @@
 package com.example.wrappedanytime.firebasewrapper.data;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class UserData extends FirebaseItem {
+public class UserEntry extends FirebaseEntry {
     private String name;
     private UUID id;
     private String spotifyId;
 
-    // TODO: wrapped list
+    private List<UUID> wrapIds;
+
+    public List<UUID> getWrapIds() {
+        return wrapIds;
+    }
+
+    public void setWrapIds(List<UUID> wrapIds) {
+        this.wrapIds = wrapIds;
+    }
+
+    public void addWrap(UUID wrapId){
+        this.wrapIds.add(wrapId);
+    }
 
     public String getName() {
         return name;
@@ -37,7 +50,7 @@ public class UserData extends FirebaseItem {
 
     @Override
     public boolean equals(Object o){
-        UserData otherUser = (UserData) o;
+        UserEntry otherUser = (UserEntry) o;
         return ! ( this.id.equals(otherUser.getId())
                 && this.name.equals(otherUser.getName())
                 && this.spotifyId.equals(otherUser.getSpotifyId())) ;
@@ -48,12 +61,13 @@ public class UserData extends FirebaseItem {
         return new HashMap<String, Object>() {{
             put("name", getName());
             put("spotifyId", getSpotifyId());
+            put("wraps", getWrapIds());
         }};
     }
 
-    public UserData(){}
+    public UserEntry(){}
 
-    public UserData(String name, UUID id, String spotifyId) {
+    public UserEntry(String name, UUID id, String spotifyId) {
         this.name = name;
         this.id = id;
         this.spotifyId = spotifyId;

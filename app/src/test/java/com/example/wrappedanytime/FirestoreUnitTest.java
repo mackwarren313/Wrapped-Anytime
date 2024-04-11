@@ -1,15 +1,10 @@
 package com.example.wrappedanytime;
 
-import com.example.wrappedanytime.firebasewrapper.FirestoreCollection;
 import com.example.wrappedanytime.firebasewrapper.FirestoreDatabase;
-import com.example.wrappedanytime.firebasewrapper.data.UserData;
-
-import org.junit.Test;
-
-import java.util.UUID;
+import com.example.wrappedanytime.firebasewrapper.data.UserEntry;
 
 public class FirestoreUnitTest {
-    private UserData userData;
+    private UserEntry userData;
     private FirestoreDatabase fdb;
 
     // check if failure is returned. for now test will always pass. still is required

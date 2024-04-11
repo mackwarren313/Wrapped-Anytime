@@ -3,7 +3,7 @@ package com.example.wrappedanytime.firebasewrapper.data;
 import java.util.Map;
 import java.util.UUID;
 
-public class UserTokenData extends FirebaseItem {
+public class UserTokenDataEntry extends FirebaseEntry {
 
     private UUID id;
     private UUID userId;
