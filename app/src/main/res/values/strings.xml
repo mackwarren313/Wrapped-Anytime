@@ -10,7 +10,6 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Settings</string>
     <string name="menu_slideshow">Generate Wrapped</string>
-<<<<<<< Updated upstream
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -24,7 +23,6 @@
     <string name="sign_in">Sign In</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
-=======
     <string name="welcome_name">Welcome {name}</string>
     <string name="menu_account_list">Account History</string>
     <string name="title_activity_home">HomeActivity</string>
@@ -70,8 +68,5 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+
 </resources>
