@@ -113,4 +113,4 @@ public class SignUpFragment extends Fragment {
         binding = null;
     }
 
-}}
+}
