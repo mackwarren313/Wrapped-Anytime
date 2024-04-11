@@ -11,4 +11,5 @@
     <string name="menu_gallery">Settings</string>
     <string name="menu_slideshow">Generate Wrapped</string>
     <string name="welcome_name">Welcome {name}</string>
+    <string name="menu_account_list">Account History</string>
 </resources>
