@@ -75,6 +75,7 @@ public class HomeFragment extends AppCompatActivity {
 
         Button createAccount = findViewById(R.id.create_account_button);
         Button login = findViewById(R.id.login_button);
+        Button editAccount = findViewById(R.id.edit_account_button);
 
         Intent signUpIntent = new Intent(HomeFragment.this, SignUpClass.class);
 
@@ -101,6 +102,25 @@ public class HomeFragment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(signUpIntent);
+            }
+        });
+
+        editAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = usernameText.getText().toString().trim();
+                String pass = passwordText.getText().toString().trim();
+
+                if (pass.isEmpty()){
+                    passwordText.setError("Password cannot be empty");
+                } else if (email.isEmpty()) {
+                    usernameText.setError("Email cannot be empty");
+                } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                    usernameText.setError("Please enter a valid email");
+                } else {
+                    loginEditUser(email, pass);
+                }
+
             }
         });
 
@@ -176,6 +196,8 @@ public class HomeFragment extends AppCompatActivity {
 
      */
 
+
+
     private void loginUser(String email, String pass) {
         auth.signInWithEmailAndPassword(email, pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
@@ -208,7 +230,7 @@ public class HomeFragment extends AppCompatActivity {
 
 
     public void afterAuthWork() {
-        Log.d("myLog", Authentication.getAccessToken());
+        //Log.d("myLog", Authentication.getAccessToken());
 
         //change to main page
         Intent mainIntent = new Intent(HomeFragment.this, SlideShowClass.class);
@@ -225,6 +247,28 @@ public class HomeFragment extends AppCompatActivity {
 
         }
         });**/ // believe this is just the email icon
+    }
+
+    private void loginEditUser(String email, String pass) {
+        auth.signInWithEmailAndPassword(email, pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                //Toast.makeText(HomeFragment.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                System.out.println("Login Successful");
+                if (Authentication.getAccessToken() == null) {
+                    Authentication.getToken(HomeFragment.this);
+                } else {
+                    Intent editIntent = new Intent(HomeFragment.this, EditAccountClass.class);
+                    startActivity(editIntent);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                //Toast.makeText(HomeFragment.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                System.out.println("Login Failed");
+            }
+        });
     }
 
 }
