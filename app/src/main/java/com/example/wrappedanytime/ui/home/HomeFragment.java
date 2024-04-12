@@ -38,13 +38,23 @@ import com.example.wrappedanytime.spotify.Datatypes.User;
 import com.example.wrappedanytime.spotify.SpotifyData;
 import com.example.wrappedanytime.ui.gallery.GalleryFragment;
 import com.example.wrappedanytime.ui.slideshow.SlideShowClass;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.rpc.context.AttributeContext;
 import com.spotify.sdk.android.auth.LoginActivity;
 
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 
@@ -58,7 +68,7 @@ public class HomeFragment extends AppCompatActivity {
     EditText passwordText;
 
     private FirebaseAuth auth;
-
+    private DatabaseReference mDatabase;
 
 
 
@@ -203,12 +213,37 @@ public class HomeFragment extends AppCompatActivity {
             @Override
             public void onSuccess(AuthResult authResult) {
                 //Toast.makeText(HomeFragment.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                System.out.println("Login Successful");
+                mDatabase = FirebaseDatabase.getInstance().getReference();
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                mDatabase.child("users").child(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (!task.isSuccessful()) {
+                            Authentication.getToken(HomeFragment.this);
+                        }
+                        else {
+                            Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                            if (String.valueOf(task.getResult().getValue()) == "null") {
+                                Authentication.getToken(HomeFragment.this);
+                            } else {
+                                JsonObject jsonObject = JsonParser.parseString(String.valueOf(task.getResult().getValue())).getAsJsonObject();
+                                String oldToken = jsonObject.get("accessToken").getAsString();
+                                if (!Authentication.testAuth(oldToken, HomeFragment.this)) {
+                                    Authentication.getToken(HomeFragment.this);
+                                } else {
+                                    Authentication.setToken(oldToken);
+                                    afterAuthWork();
+                                }
+                            }
+                        }
+                    }
+                });
+                /*System.out.println("Login Successful");
                 if (Authentication.getAccessToken() == null) {
                     Authentication.getToken(HomeFragment.this);
                 } else {
                     afterAuthWork();
-                }
+                }*/
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
