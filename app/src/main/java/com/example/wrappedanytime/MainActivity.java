@@ -10,6 +10,7 @@ import com.example.wrappedanytime.firebasewrapper.data.UserData;
 import com.example.wrappedanytime.spotify.Authentication;
 import com.example.wrappedanytime.spotify.Datatypes.User;
 import com.example.wrappedanytime.spotify.SpotifyData;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -47,6 +48,16 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_account_list, R.id.nav_slideshow).build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(binding.navView, navController);
+
+        /*
         setSupportActionBar(binding.appBarMain.toolbar);
 
         DrawerLayout drawer = binding.drawerLayout;
@@ -60,7 +71,10 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+         */
     }
+
+
 
     /*
     @Override
@@ -106,6 +120,8 @@ public class MainActivity extends AppCompatActivity {
 
      */
 
+    /*
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -120,4 +136,6 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+     */
 }
