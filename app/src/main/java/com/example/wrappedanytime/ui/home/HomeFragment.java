@@ -29,6 +29,7 @@ import com.example.wrappedanytime.MainActivity;
 import com.example.wrappedanytime.R;
 import com.example.wrappedanytime.databinding.ActivityMainBinding;
 import com.example.wrappedanytime.databinding.FragmentHomeBinding;
+import com.example.wrappedanytime.spotify.Audio;
 import com.example.wrappedanytime.spotify.Authentication;
 import com.example.wrappedanytime.spotify.Datatypes.Album;
 import com.example.wrappedanytime.spotify.Datatypes.Artist;
@@ -119,7 +120,6 @@ public class HomeFragment extends AppCompatActivity {
         //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         auth = FirebaseAuth.getInstance();
-
         usernameText = root.findViewById(R.id.Username);
         passwordText = root.findViewById(R.id.Password);
 
