@@ -11,7 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wrappedanytime.R;
+import com.example.wrappedanytime.firebasewrapper.FirestoreDatabase;
 import com.example.wrappedanytime.spotify.Datatypes.UserData;
+import com.example.wrappedanytime.ui.home.HomeFragment;
 import com.example.wrappedanytime.ui.slideshow.RecyclerAdapter;
 
 import java.util.ArrayList;
@@ -60,7 +62,9 @@ public class AccountsRecyclerAdapter extends RecyclerView.Adapter<AccountsRecycl
         holder.loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //dont look at this one im working on how to update data retriever
+                //get email and password from data stored here
+                // HomeFragment homeFragment = new HomeFragment();
+                //homeFragment.loginUser();
             }
         });
 
@@ -69,10 +73,8 @@ public class AccountsRecyclerAdapter extends RecyclerView.Adapter<AccountsRecycl
             public void onClick(View v) {
                 AccountsFragment.accounts.remove(holder.getAdapterPosition());
                 notifyDataSetChanged();
-                //holder.use is the user
-                //holder.user another . function to call for top artists and genre and stuff
-                //remove from db here or more likely before removing from the accounts list but i made a user
-                //object for you to use as well
+
+                //FirestoreDatabase.deleteUserData(holder.user);
             }
         });
     }

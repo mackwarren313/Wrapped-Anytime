@@ -10,7 +10,6 @@ public class WrappedData extends FirebaseItem{
     private String userId;
     private UUID id;
     private Date dataTimeCreated; // enforce time stamp?
-
     private List<String> topArtistSpotifyURI;
     private List<String> topSongsSpotifyURI;
     private String topGenre; // TODO: use enum ?

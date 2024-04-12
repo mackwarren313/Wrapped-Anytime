@@ -198,7 +198,7 @@ public class HomeFragment extends AppCompatActivity {
 
 
 
-    private void loginUser(String email, String pass) {
+    public void loginUser(String email, String pass) {
         auth.signInWithEmailAndPassword(email, pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wrappedanytime.MainActivity;
 import com.example.wrappedanytime.R;
 import com.example.wrappedanytime.databinding.FragmentAccountsBinding;
+import com.example.wrappedanytime.firebasewrapper.FirestoreDatabase;
 import com.example.wrappedanytime.spotify.Datatypes.Album;
 import com.example.wrappedanytime.spotify.Datatypes.Artist;
 import com.example.wrappedanytime.spotify.Datatypes.Track;
@@ -57,9 +58,7 @@ public class AccountsFragment extends Fragment {
     }
 
     public static void loadFromDB(){
-        //load from db in here
-        //something like FirstoreDatabase firestoreDatabase= new ...
-        //firestoreDatabase.loadFromDB
+        //for (int i = 0; i < FirestoreDatabase.USER_COLLECTION.)
     }
 
     @Override
