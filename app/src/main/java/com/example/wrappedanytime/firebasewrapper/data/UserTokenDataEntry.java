@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class UserTokenDataEntry extends FirebaseEntry {
 
-    private UUID id;
+    private String id;
     private UUID userId;
 //    private String token; ?
 
@@ -19,12 +19,12 @@ public class UserTokenDataEntry extends FirebaseEntry {
 
 
     @Override
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     @Override
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 

@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class UserEntry extends FirebaseEntry {
     private String name;
-    private UUID id;
+    private String id;
     private String spotifyId;
 
     private List<UUID> wrapIds;
@@ -32,11 +32,11 @@ public class UserEntry extends FirebaseEntry {
         this.name = name;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -67,7 +67,7 @@ public class UserEntry extends FirebaseEntry {
 
     public UserEntry(){}
 
-    public UserEntry(String name, UUID id, String spotifyId) {
+    public UserEntry(String name, String id, String spotifyId) {
         this.name = name;
         this.id = id;
         this.spotifyId = spotifyId;

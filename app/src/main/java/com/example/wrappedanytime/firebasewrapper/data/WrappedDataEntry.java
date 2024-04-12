@@ -3,7 +3,6 @@ package com.example.wrappedanytime.firebasewrapper.data;
 import com.example.wrappedanytime.spotify.Datatypes.UserData;
 import com.example.wrappedanytime.spotify.SpotifyData;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +10,7 @@ import java.util.UUID;
 
 public class WrappedDataEntry extends FirebaseEntry {
     private String userId;
-    private UUID id;
+    private String id;
     private UserData.TimeRange timeRange;
     private List<String> topArtistsSpotifyURI;
     private List<String> topSongsSpotifyURI;
@@ -53,11 +52,11 @@ public class WrappedDataEntry extends FirebaseEntry {
         this.userId = userId;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

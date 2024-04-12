@@ -13,7 +13,7 @@ import java.util.UUID;
 // generic firestore collection for data items
 public class FirestoreCollection<T extends FirebaseEntry> {
     private final CollectionReference cr;
-    private final Map<UUID, T> cachedItemData;
+    private final Map<String, T> cachedItemData;
 
     public FirestoreCollection(CollectionReference cr) {
         this.cr = cr;
