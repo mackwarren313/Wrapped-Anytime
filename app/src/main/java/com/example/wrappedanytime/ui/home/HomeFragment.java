@@ -36,6 +36,7 @@ import com.example.wrappedanytime.spotify.Datatypes.Track;
 import com.example.wrappedanytime.spotify.Datatypes.User;
 import com.example.wrappedanytime.spotify.SpotifyData;
 import com.example.wrappedanytime.ui.gallery.GalleryFragment;
+import com.example.wrappedanytime.ui.slideshow.SlideShowClass;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
@@ -57,10 +58,54 @@ public class HomeFragment extends AppCompatActivity {
 
     private FirebaseAuth auth;
 
-    Intent signUpIntent = new Intent(this, SignUpFragment.class);
-    //change to main page
-    Intent mainIntent = new Intent(this, GalleryFragment.class);
 
+
+
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        binding = FragmentHomeBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        auth = FirebaseAuth.getInstance();
+
+        usernameText = findViewById(R.id.Username);
+        passwordText = findViewById(R.id.Password);
+
+        Button createAccount = findViewById(R.id.create_account_button);
+        Button login = findViewById(R.id.login_button);
+
+        Intent signUpIntent = new Intent(HomeFragment.this, SignUpClass.class);
+
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = usernameText.getText().toString().trim();
+                String pass = passwordText.getText().toString().trim();
+
+                if (pass.isEmpty()){
+                    passwordText.setError("Password cannot be empty");
+                } else if (email.isEmpty()) {
+                    usernameText.setError("Email cannot be empty");
+                } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                    usernameText.setError("Please enter a valid email");
+                } else {
+                    loginUser(email, pass);
+                }
+            }
+        });
+
+        createAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(signUpIntent);
+            }
+        });
+
+    }
+
+    /*
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
@@ -107,16 +152,20 @@ public class HomeFragment extends AppCompatActivity {
 
 
 
-        /*Model of how to use the spotify data getter
+        Model of how to use the spotify data getter
          * At the top of your class's onCreateView, put:
          * SpotifyData dataRetriever = new SpotifyData(this.getActivity());
          * Then, later, wherever you want the data, put:
          * dataRetriever.getUser();
          * This will return a User object. More objects coming.
-         */
+
 
         return root;
-    }
+}
+     */
+
+
+
 
     /*
 
@@ -160,6 +209,9 @@ public class HomeFragment extends AppCompatActivity {
 
     public void afterAuthWork() {
         Log.d("myLog", Authentication.getAccessToken());
+
+        //change to main page
+        Intent mainIntent = new Intent(HomeFragment.this, SlideShowClass.class);
 
         startActivity(mainIntent);
 

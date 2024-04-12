@@ -54,13 +54,13 @@ public class SignUpFragment extends Fragment {
         usernameText = root.findViewById(R.id.Username);
         passwordText = root.findViewById(R.id.Password);
 
-        Button login = root.findViewById(R.id.login_button);
+        Button login = root.findViewById(R.id.login_page_button);
         Button register = root.findViewById(R.id.register_button);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = passwordText.getText().toString().trim();
-                String pass = usernameText.getText().toString().trim();
+                String email = usernameText.getText().toString().trim();
+                String pass = passwordText.getText().toString().trim();
 
                 if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     if (!pass.isEmpty()) {
