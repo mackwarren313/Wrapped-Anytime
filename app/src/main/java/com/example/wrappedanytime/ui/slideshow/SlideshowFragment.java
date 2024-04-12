@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wrappedanytime.R;
 import com.example.wrappedanytime.databinding.FragmentSlideshowBinding;
+import com.example.wrappedanytime.spotify.Audio;
 import com.example.wrappedanytime.spotify.Datatypes.Artist;
 import com.example.wrappedanytime.spotify.Datatypes.Track;
 import com.example.wrappedanytime.spotify.Datatypes.User;
@@ -58,10 +59,11 @@ public class SlideshowFragment extends Fragment{
         TextView welcome = root.findViewById(R.id.welcome_with_username);
         welcome.setText("Welcome " + user.getDisplayName());
 
-
         TextView topGenre = root.findViewById(R.id.top_genre_tv);
         topGenre.setText(data.getTopGenre());
-
+        for (int i = 0; i < topTracksData.size(); i++) {
+            if (Audio.playAudio(topTracksData.get(i).getPreviewUrl())) break;
+        }
 
         artistView = root.findViewById(R.id.top_artists_list);
         artistView.setLayoutManager(new LinearLayoutManager(this.getContext()));
