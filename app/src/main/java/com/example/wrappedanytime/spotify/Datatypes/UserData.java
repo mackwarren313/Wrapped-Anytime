@@ -22,6 +22,7 @@ public class UserData {
     private List<Artist> topArtists;
     private String topGenre;
 
+
     public UserData (String userID, Track[] topTracks, String[] topArtists, String topGenre) {
         this.topTracks = new ArrayList<>();
         this.topArtists = new ArrayList<>();
