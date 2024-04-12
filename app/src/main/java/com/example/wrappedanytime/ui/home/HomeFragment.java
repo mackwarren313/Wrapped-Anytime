@@ -21,6 +21,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.wrappedanytime.MainActivity;
 import com.example.wrappedanytime.R;
 import com.example.wrappedanytime.databinding.FragmentHomeBinding;
+import com.example.wrappedanytime.spotify.Audio;
 import com.example.wrappedanytime.spotify.Datatypes.Album;
 import com.example.wrappedanytime.spotify.Datatypes.Artist;
 import com.example.wrappedanytime.spotify.Datatypes.Track;
@@ -55,7 +56,6 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
 
         auth = FirebaseAuth.getInstance();
-
         usernameText = root.findViewById(R.id.Username);
         passwordText = root.findViewById(R.id.Password);
 
