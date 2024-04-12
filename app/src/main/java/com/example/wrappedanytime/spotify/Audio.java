@@ -11,7 +11,10 @@ public class Audio {
     public Audio(String url) {
         this.url = url;
     }
-    public static void playAudio(String url) {
+    public static boolean playAudio(String url) {
+        if (url == null) {
+            return false;
+        }
         stopAudio();
         mp = new MediaPlayer();
         try {
@@ -20,7 +23,9 @@ public class Audio {
             mp.start();
         } catch (IOException e) {
             Log.e("myApp", "prepare() failed");
+            return false;
         }
+        return true;
     }
     public static void stopAudio() {
         mp.release();
