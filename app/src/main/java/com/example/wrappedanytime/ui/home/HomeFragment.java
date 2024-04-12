@@ -222,6 +222,7 @@ public class HomeFragment extends AppCompatActivity {
                             Authentication.getToken(HomeFragment.this);
                         }
                         else {
+
                             Log.d("firebase", String.valueOf(task.getResult().getValue()));
                             if (String.valueOf(task.getResult().getValue()) == "null") {
                                 Authentication.getToken(HomeFragment.this);
