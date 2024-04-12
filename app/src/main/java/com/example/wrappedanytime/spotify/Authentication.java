@@ -5,6 +5,10 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.example.wrappedanytime.MainActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
@@ -42,10 +46,12 @@ public class Authentication {
     }
     public static void storeAuth(int requestCode, int resultCode, Intent data) {
         final AuthorizationResponse response = AuthorizationClient.getResponse(resultCode, data);
-
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         // Check which request code is present (if any)
         if (AUTH_TOKEN_REQUEST_CODE == requestCode) {
             mAccessToken = response.getAccessToken();
+            mDatabase.child("users").child(user.getUid()).child("accessToken").setValue(mAccessToken);
         } else if (AUTH_CODE_REQUEST_CODE == requestCode) {
             mAccessCode = response.getCode();
         }

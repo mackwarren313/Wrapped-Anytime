@@ -78,6 +78,7 @@ public class SlideshowFragment extends Fragment{
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        Audio.stopAudio();
         binding = null;
     }
 }
