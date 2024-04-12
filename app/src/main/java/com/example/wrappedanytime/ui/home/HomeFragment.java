@@ -255,12 +255,18 @@ public class HomeFragment extends AppCompatActivity {
             public void onSuccess(AuthResult authResult) {
                 //Toast.makeText(HomeFragment.this, "Login Successful", Toast.LENGTH_SHORT).show();
                 System.out.println("Login Successful");
-                if (Authentication.getAccessToken() == null) {
+                Intent editIntent = new Intent(HomeFragment.this, EditAccountClass.class);
+                Bundle b = new Bundle();
+                b.putString("user", email);
+                b.putString("pass", pass);
+                editIntent.putExtras(b);
+                startActivity(editIntent);
+                /*if (Authentication.getAccessToken() == null) {
                     Authentication.getToken(HomeFragment.this);
                 } else {
                     Intent editIntent = new Intent(HomeFragment.this, EditAccountClass.class);
                     startActivity(editIntent);
-                }
+                }*/
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

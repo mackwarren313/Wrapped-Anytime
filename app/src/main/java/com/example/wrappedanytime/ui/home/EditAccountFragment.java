@@ -59,25 +59,27 @@ public class EditAccountFragment extends Fragment {
         passwordText = root.findViewById(R.id.Password);
         changeEmail = root.findViewById(R.id.changeEmail);
         changePass = root.findViewById(R.id.changePassword);
-
+        Bundle b = this.getActivity().getIntent().getExtras();
+        String oldUser = b.getString("user");
+        String oldPass = b.getString("pass");
         Button update = root.findViewById(R.id.update_button);
         Button delete = root.findViewById(R.id.delete_button);
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = usernameText.getText().toString().trim();
-                String pass = passwordText.getText().toString().trim();
+                String email = changeEmail.getText().toString().trim();
+                String pass = changePass.getText().toString().trim();
 
                 if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     if (!pass.isEmpty()) {
-                        change(email, pass);
+                        change(email, pass, oldUser, oldPass);
                     } else {
-                        passwordText.setError("Password cannot be empty");
+                        changePass.setError("Password cannot be empty");
                     }
                 } else if (email.isEmpty()) {
-                    usernameText.setError("Email cannot be empty");
+                    changeEmail.setError("Email cannot be empty");
                 } else {
-                    usernameText.setError("Please enter a valid email");
+                    changeEmail.setError("Please enter a valid email");
                 }
 
             }
@@ -88,6 +90,8 @@ public class EditAccountFragment extends Fragment {
             public void onClick(View v) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 user.delete();
+                NavHostFragment.findNavController(EditAccountFragment.this)
+                        .navigate(R.id.action_edit_to_homeFragment);
             }
         });
 
@@ -97,12 +101,11 @@ public class EditAccountFragment extends Fragment {
 
 
     // Here we are going to change our email using firebase re-authentication
-    private void change(String email, final String password) {
+    private void change(String email, final String password, String oldEmail, String oldPassword) {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
         // Get auth credentials from the user for re-authentication
-        AuthCredential credential = EmailAuthProvider.getCredential(email, password); // Current Login Credentials
+        AuthCredential credential = EmailAuthProvider.getCredential(oldEmail, oldPassword); // Current Login Credentials
 
         // Prompt the user to re-provide their sign-in credentials
         user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -122,12 +125,20 @@ public class EditAccountFragment extends Fragment {
                         }
                     }
                 });
+            }
+        });
+        user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
 
+                Log.d("value", "User re-authenticated.");
                 user.updatePassword(changePass.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             System.out.println("Successful pass update");
+                            NavHostFragment.findNavController(EditAccountFragment.this)
+                                    .navigate(R.id.action_edit_to_homeFragment);
                         }
                     }
                 });
