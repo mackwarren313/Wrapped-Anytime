@@ -18,14 +18,13 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.wrappedanytime.R;
-import com.example.wrappedanytime.databinding.FragmentHomeBinding;
 import com.example.wrappedanytime.databinding.FragmentSignUpBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class SignUp extends Fragment {
+public class SignUpFragment extends Fragment {
 
     //private SignUpViewModel mViewModel;
 
@@ -55,13 +54,13 @@ public class SignUp extends Fragment {
         usernameText = root.findViewById(R.id.Username);
         passwordText = root.findViewById(R.id.Password);
 
-        Button login = root.findViewById(R.id.login_button);
+        Button login = root.findViewById(R.id.login_page_button);
         Button register = root.findViewById(R.id.register_button);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = passwordText.getText().toString().trim();
-                String pass = usernameText.getText().toString().trim();
+                String email = usernameText.getText().toString().trim();
+                String pass = passwordText.getText().toString().trim();
 
                 if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     if (!pass.isEmpty()) {
@@ -81,8 +80,8 @@ public class SignUp extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(SignUp.this)
-                        .navigate(R.id.action_signUp_to_nav_home);
+                NavHostFragment.findNavController(SignUpFragment.this)
+                        .navigate(R.id.action_signUp_to_homeFragment);
             }
         });
 
@@ -95,8 +94,8 @@ public class SignUp extends Fragment {
             public void onSuccess(AuthResult authResult) {
                 //Toast.makeText(HomeFragment.this, "Login Successful", Toast.LENGTH_SHORT).show();
                 System.out.println("Register Successful");
-                NavHostFragment.findNavController(SignUp.this)
-                        .navigate(R.id.action_signUp_to_nav_home);
+                NavHostFragment.findNavController(SignUpFragment.this)
+                        .navigate(R.id.action_signUp_to_homeFragment);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

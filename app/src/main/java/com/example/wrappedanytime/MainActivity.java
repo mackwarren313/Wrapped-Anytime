@@ -26,10 +26,11 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    private SpotifyData dataRetriever;
+    //private SpotifyData dataRetriever;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
         //Authentication.setToken("BQBzNZ8lJm0aHicLDA5P6RSVlVlXug1AP9E9gSu--kMP9x1Ants-TLgNpHfgTdoEOvNYuBwNGJp1Zw7nRJT9XoK4evBwVt36G5YjNfWwXMWW7fsjgSguscV_gyu1El8Tw6-yzu3tkN2dRres6QXO64xoQO0cXjmKKOqWn6RUKMR7j3QTqD4P6z6w2dktxP5qsnpAUkWSfA-iKg");
         String token = "";
         //put your token here to test ig lol
@@ -40,14 +41,36 @@ public class MainActivity extends AppCompatActivity {
             Authentication.setToken(token);
             afterAuthWork();
         }
+
+         */
+
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        setSupportActionBar(binding.appBarMain.toolbar);
+
+        DrawerLayout drawer = binding.drawerLayout;
+        NavigationView navigationView = binding.navView;
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                .setOpenableLayout(drawer)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
     }
 
+    /*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Authentication.storeAuth(requestCode, resultCode, data);
         afterAuthWork();
     }
+
+
 
     private void afterAuthWork() {
         Log.d("myLog", Authentication.getAccessToken());
@@ -59,15 +82,15 @@ public class MainActivity extends AppCompatActivity {
         User user = dataRetriever.getUser();
         Log.d("userDataLog", user.toString());
         /**binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("myLog", "before user call");
-                User user = dataRetriever.getUser();
-                Log.d("myLog", user.toString());
-                Log.d("myLog", "after user call");
+        @Override
+        public void onClick(View view) {
+        Log.d("myLog", "before user call");
+        User user = dataRetriever.getUser();
+        Log.d("myLog", user.toString());
+        Log.d("myLog", "after user call");
 
-            }
-        });**/ // believe this is just the email icon
+        }
+        });
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -80,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
     }
+
+     */
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
