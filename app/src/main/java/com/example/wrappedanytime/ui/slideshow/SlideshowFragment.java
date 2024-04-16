@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import com.example.wrappedanytime.spotify.Datatypes.Track;
 import com.example.wrappedanytime.spotify.Datatypes.User;
 import com.example.wrappedanytime.spotify.Datatypes.UserData;
 import com.example.wrappedanytime.spotify.SpotifyData;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -72,7 +74,8 @@ public class SlideshowFragment extends Fragment{
         tracksView = root.findViewById(R.id.top_tracks_list);
         tracksView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         tracksView.setAdapter(new RecyclerAdapter(getContext().getApplicationContext(), topTracks));
-
+        ImageView testing = root.findViewById(R.id.testingImage);
+        topArtistsData.get(0).getImage().setImageView(testing);
         return root;
     }
     @Override

@@ -54,8 +54,11 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.8")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("com.google.firebase:firebase-auth:22.3.1")
+    implementation("com.squareup.picasso:picasso:2.8")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
 
 }

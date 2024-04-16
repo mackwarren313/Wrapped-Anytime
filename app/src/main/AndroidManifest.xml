@@ -28,7 +28,7 @@
             android:name=".ui.slideshow.SlideShowClass"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/Theme.WrappedAnytime.NoActionBar">
+            android:theme="@style/Theme.WrappedAnytime">
         </activity>
         <activity
             android:name=".ui.home.HomeFragment"

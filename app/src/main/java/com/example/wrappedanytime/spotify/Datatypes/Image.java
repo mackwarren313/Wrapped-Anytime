@@ -1,6 +1,9 @@
 package com.example.wrappedanytime.spotify.Datatypes;
 
+import android.widget.ImageView;
+
 import com.google.gson.JsonObject;
+import com.squareup.picasso.Picasso;
 
 public class Image {
     String url;
@@ -16,7 +19,9 @@ public class Image {
         this.height = object.get("height").getAsInt();
         this.width = object.get("width").getAsInt();
     }
-
+    public void setImageView(ImageView target) {
+        Picasso.get().load(this.url).into(target);
+    }
     public String getUrl(){
         return url;
     }
