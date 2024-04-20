@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/accounts_recycler"
         android:layout_width="414dp"
         android:layout_height="636dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,12 +23,29 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
         android:background="#2c2f33"
-        android:gravity="center"
-        android:text="Account Editor"
+        android:gravity="top"
+        android:text="Account List"
         android:textColor="@color/white"
-        android:textSize="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        android:textSize="55dp"
+        app:layout_constraintBottom_toTopOf="@+id/accounts_recycler"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:onClick="newNote"
+        android:text="+"
+        android:textColor="@color/white"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/account_title"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

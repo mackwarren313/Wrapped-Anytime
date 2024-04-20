@@ -31,13 +31,9 @@ import java.util.List;
 public class SlideshowFragment extends Fragment{
 
     private FragmentSlideshowBinding binding;
-    SpotifyData dataRetriever = new SpotifyData(this.getActivity());
-    User user = dataRetriever.getUser();
-    UserData data = dataRetriever.getUserData(UserData.TimeRange.MEDIUM);
-    List<Artist> topArtistsData = data.getTopArtists();
-    List<Track> topTracksData = data.getTopTracks();
 
-    String Genre = data.getTopGenre();
+    public static UserData data;
+
     RecyclerView artistView;
     RecyclerView tracksView;
 
@@ -48,6 +44,14 @@ public class SlideshowFragment extends Fragment{
 
         binding = FragmentSlideshowBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        List<Artist> topArtistsData = data.getTopArtists();
+        List<Track> topTracksData = data.getTopTracks();
+
+        //Calling from database in here actually
+
+        String Genre = data.getTopGenre();
+
         ArrayList<String> topArtists = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             topArtists.add(topArtistsData.get(i).getName());
@@ -59,7 +63,7 @@ public class SlideshowFragment extends Fragment{
         }
 
         TextView welcome = root.findViewById(R.id.welcome_with_username);
-        welcome.setText("Welcome " + user.getDisplayName());
+        //welcome.setText("Welcome " + user.getDisplayName());
 
         TextView topGenre = root.findViewById(R.id.top_genre_tv);
         topGenre.setText(data.getTopGenre());
