@@ -6,6 +6,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,14 +24,15 @@ public class UserData {
     private List<Artist> topArtists;
     private String topGenre;
 
-
-    public UserData (String userID, Track[] topTracks, String[] topArtists, String topGenre) {
+    private String dateAndTime;
+    public UserData (String userID, Track[] topTracks, String[] topArtists, String topGenre, String dateAndTime) {
         this.topTracks = new ArrayList<>();
         this.topArtists = new ArrayList<>();
         this.topGenre = topGenre;
+        this.dateAndTime = dateAndTime;
     }
 
-    public UserData() { this(null, null, null, null); }
+    public UserData() { this(null, null, null, null, null); }
     public UserData(String artistJson, String trackJson) {
         JsonObject jsonObject = JsonParser.parseString(artistJson).getAsJsonObject();
         ArrayList<Track> topTracks = new ArrayList<>();
@@ -64,6 +67,11 @@ public class UserData {
                 mostCommonGenres.add(entry.getKey());
             }
         }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("'Date\n'dd-MM-yyyy '\n\nand\n\nTime\n'HH:mm:ss z");
+        String currentDateAndTime = sdf.format(new Date());
+        this.dateAndTime = currentDateAndTime;
+
         Random random = new Random();
         this.topGenre = mostCommonGenres.get(random.nextInt(mostCommonGenres.size()));
     }
@@ -72,6 +80,7 @@ public class UserData {
     public List<Artist> getTopArtists() { return topArtists; }
 
     public String getTopGenre() { return topGenre; }
+    public String getDateAndTime() {return dateAndTime;}
 
 
     public void setTopTracks(List<Track> topTracks) { this.topTracks = topTracks; }
@@ -79,6 +88,7 @@ public class UserData {
     public void setTopArtists(List<Artist> topArtists) { this.topArtists = topArtists; }
 
     public void setTopGenre(String topGenre) { this.topGenre = topGenre; }
+    public void setDateAndTime(String dateAndTime){this.dateAndTime = dateAndTime; }
 
 
     @Override

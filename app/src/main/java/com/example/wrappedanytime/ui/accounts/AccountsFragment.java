@@ -127,6 +127,7 @@ public class AccountsFragment extends Fragment {
             data.setTopArtists(ds.child(userID).getValue(UserData.class).getTopArtists());
             data.setTopTracks(ds.child(userID).getValue(UserData.class).getTopTracks());
             data.setTopGenre(ds.child(userID).getValue(UserData.class).getTopGenre());
+            data.setDateAndTime(ds.child(userID).getValue(UserData.class).getDateAndTime());
             accounts.add(data);
         }
 

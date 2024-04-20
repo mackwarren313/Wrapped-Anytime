@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wrappedanytime.R;
 import com.example.wrappedanytime.databinding.FragmentSlideshowBinding;
 import com.example.wrappedanytime.spotify.Audio;
+import com.example.wrappedanytime.spotify.Datatypes.Album;
 import com.example.wrappedanytime.spotify.Datatypes.Artist;
 import com.example.wrappedanytime.spotify.Datatypes.Track;
 import com.example.wrappedanytime.spotify.Datatypes.User;
@@ -33,6 +34,7 @@ public class SlideshowFragment extends Fragment{
     private FragmentSlideshowBinding binding;
 
     public static UserData data;
+    SpotifyData dataRetriever;
 
     RecyclerView artistView;
     RecyclerView tracksView;
@@ -48,7 +50,6 @@ public class SlideshowFragment extends Fragment{
         List<Artist> topArtistsData = data.getTopArtists();
         List<Track> topTracksData = data.getTopTracks();
 
-        //Calling from database in here actually
 
         String Genre = data.getTopGenre();
 
@@ -78,8 +79,16 @@ public class SlideshowFragment extends Fragment{
         tracksView = root.findViewById(R.id.top_tracks_list);
         tracksView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         tracksView.setAdapter(new RecyclerAdapter(getContext().getApplicationContext(), topTracks));
-        ImageView testing = root.findViewById(R.id.testingImage);
-        topArtistsData.get(0).getImage().setImageView(testing);
+
+
+        ImageView topArtist = root.findViewById(R.id.topArtistImage);
+        topArtistsData.get(0).getImage().setImageView(topArtist);
+
+        ImageView topTrack = root.findViewById(R.id.topTrackImage);
+        String topTrackAlbum = topTracksData.get(0).getAlbumID();
+        Album topAlbum = dataRetriever.getAlbum(topTrackAlbum);
+        topAlbum.getCoverArt().setImageView(topTrack);
+
         return root;
     }
     @Override

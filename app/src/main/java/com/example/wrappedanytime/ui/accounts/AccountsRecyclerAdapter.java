@@ -54,14 +54,13 @@ public class AccountsRecyclerAdapter extends RecyclerView.Adapter<AccountsRecycl
     @Override
     public void onBindViewHolder(@NonNull AccountsRecyclerAdapter.MyViewHolder holder, int position) {
         UserData userData = list.get(position);
-        holder.text.setText(list.get(position).toString());
+        holder.text.setText(list.get(position).getDateAndTime());
         holder.user = userData;
 
         holder.loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SlideshowFragment.data = holder.user;
-
             }
         });
 
@@ -70,6 +69,7 @@ public class AccountsRecyclerAdapter extends RecyclerView.Adapter<AccountsRecycl
             public void onClick(View v) {
                 AccountsFragment.accounts.remove(holder.getAdapterPosition());
                 notifyDataSetChanged();
+                //delete from database needs to happen here
             }
         });
     }
