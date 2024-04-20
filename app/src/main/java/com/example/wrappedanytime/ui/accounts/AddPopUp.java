@@ -76,7 +76,6 @@ public class AddPopUp extends DialogFragment {
     private void shortWrapped() {
         UserData data = dataRetriever.getUserData(UserData.TimeRange.SHORT);
         myRef.child("users").child(userID).setValue(data);
-
     }
 
     private void mediumWrapped() {

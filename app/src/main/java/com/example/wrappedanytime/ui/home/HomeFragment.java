@@ -90,7 +90,7 @@ public class HomeFragment extends AppCompatActivity {
         Button createAccount = findViewById(R.id.create_account_button);
         Button login = findViewById(R.id.login_button);
         Button editAccount = findViewById(R.id.edit_account_button);
-        ImageView testing = findViewById(R.id.testingImage);
+        ImageView testing = findViewById(R.id.topTrackImage);
         Intent signUpIntent = new Intent(HomeFragment.this, SignUpClass.class);
 
 

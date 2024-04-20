@@ -25,6 +25,7 @@ public class AccountsRecyclerAdapter extends RecyclerView.Adapter<AccountsRecycl
     private ArrayList<UserData> list;
 
 
+
     public AccountsRecyclerAdapter(Context context, ArrayList<UserData> list){
         this.list = list;
         this.context = context;
@@ -69,7 +70,7 @@ public class AccountsRecyclerAdapter extends RecyclerView.Adapter<AccountsRecycl
             public void onClick(View v) {
                 AccountsFragment.accounts.remove(holder.getAdapterPosition());
                 notifyDataSetChanged();
-                //delete from database needs to happen here
+
             }
         });
     }
