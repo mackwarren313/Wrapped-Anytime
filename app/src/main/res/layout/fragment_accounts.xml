@@ -24,7 +24,7 @@
         android:layout_marginBottom="36dp"
         android:background="#2c2f33"
         android:gravity="top"
-        android:text="Account List"
+        android:text="Old Wraps"
         android:textColor="@color/white"
         android:textSize="55dp"
         app:layout_constraintBottom_toTopOf="@+id/accounts_recycler"
