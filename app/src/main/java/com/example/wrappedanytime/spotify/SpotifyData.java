@@ -14,6 +14,10 @@ import com.example.wrappedanytime.spotify.Datatypes.Image;
 import com.example.wrappedanytime.spotify.Datatypes.Track;
 import com.example.wrappedanytime.spotify.Datatypes.User;
 import com.example.wrappedanytime.spotify.Datatypes.UserData;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -107,7 +111,17 @@ public class SpotifyData {
         return new Artist(retJSON(request));
     }
 
-    public UserData getUserData(UserData.TimeRange timeRange) {
+    public UserData getUserData(UserData.TimeRange timeRange, int childCount) {
+        FirebaseDatabase mFirebaseDatabase;
+        FirebaseAuth mAuth;
+        FirebaseAuth.AuthStateListener mAuthListener;
+        DatabaseReference myRef;
+        String userID;
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference();
+        FirebaseUser user = mAuth.getCurrentUser();
+        userID = user.getUid();
         Date curDate = new Date(System.currentTimeMillis());
         Map<UserData.TimeRange, String> timeRangeMap = new HashMap<>();
         timeRangeMap.put(UserData.TimeRange.SHORT, "short_term");
@@ -126,6 +140,13 @@ public class SpotifyData {
         UserData ret = new UserData(artistRet, trackRet);
         ret.setGenDate(curDate);
         ret.setTr(timeRange);
+        String wrapNum = "Wrap " + childCount;
+        myRef.child("users").child(userID).child("wraps").child(wrapNum).child("artistJSON").setValue(artistRet);
+        myRef.child("users").child(userID).child("wraps").child(wrapNum).child("trackJSON").setValue(trackRet);
+        myRef.child("users").child(userID).child("wraps").child(wrapNum).child("genDate").setValue(curDate);
+        myRef.child("users").child(userID).child("wraps").child(wrapNum).child("tr").setValue(timeRange);
+
+
         return ret;
     }
 

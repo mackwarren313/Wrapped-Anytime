@@ -8,7 +8,9 @@ import com.squareup.picasso.Picasso;
 public class Image {
     String url;
     int height, width;
-
+    public Image(){
+        this(null, 0, 0);
+    }
     public Image(String url, int height, int width) {
         this.url = url;
         this.height = height;

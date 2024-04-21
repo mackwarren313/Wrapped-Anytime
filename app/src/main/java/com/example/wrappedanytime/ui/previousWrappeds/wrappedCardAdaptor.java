@@ -1,5 +1,6 @@
 package com.example.wrappedanytime.ui.previousWrappeds;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +48,7 @@ public class wrappedCardAdaptor extends RecyclerView.Adapter<wrappedCardViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull wrappedCardViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull wrappedCardViewHolder holder, @SuppressLint("RecyclerView") int position) {
         UserData current = list.get(position);
         Date genDate = current.getGenDate();
         StringBuilder sb = new StringBuilder();

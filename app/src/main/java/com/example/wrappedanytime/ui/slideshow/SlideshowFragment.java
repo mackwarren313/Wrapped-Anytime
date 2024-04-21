@@ -34,18 +34,20 @@ public class SlideshowFragment extends Fragment{
     private FragmentSlideshowBinding binding;
     SpotifyData dataRetriever = new SpotifyData(this.getActivity());
     User user = dataRetriever.getUser();
-    UserData data = dataRetriever.getUserData(UserData.TimeRange.MEDIUM);
-    List<Artist> topArtistsData = data.getTopArtists();
-    List<Track> topTracksData = data.getTopTracks();
+    //UserData data = dataRetriever.getUserData(UserData.TimeRange.MEDIUM, -1);
+    UserData data;
+    List<Artist> topArtistsData;
+    List<Track> topTracksData;
 
-    String Genre = data.getTopGenre();
+    //String Genre = data.getTopGenre();
+    String Genre;
     RecyclerView artistView;
     RecyclerView tracksView;
     public SlideshowFragment(UserData ud) {
         data = ud;
         topArtistsData = data.getTopArtists();
         topTracksData = data.getTopTracks();
-
+        Genre = data.getTopGenre();
     }
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
