@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,10 +20,6 @@ import com.example.wrappedanytime.spotify.Datatypes.Track;
 import com.example.wrappedanytime.spotify.Datatypes.User;
 import com.example.wrappedanytime.spotify.Datatypes.UserData;
 import com.example.wrappedanytime.spotify.SpotifyData;
-import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,9 +53,8 @@ public class SlideshowFragment extends Fragment{
         View root = binding.getRoot();
 
 
-        ArrayList<String> topArtists = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            topArtists.add(topArtistsData.get(i).getName());
+            topArtistsData.add(topArtistsData.get(i));
         }
 
         ArrayList<String> topTracks = new ArrayList<>();
@@ -79,11 +73,11 @@ public class SlideshowFragment extends Fragment{
 
         artistView = root.findViewById(R.id.top_artists_list);
         artistView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        artistView.setAdapter(new RecyclerAdapter(getContext().getApplicationContext(), topArtists));
+        artistView.setAdapter(new RecyclerAdapterArtists(getContext().getApplicationContext(), topArtistsData));
 
         tracksView = root.findViewById(R.id.top_tracks_list);
         tracksView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        tracksView.setAdapter(new RecyclerAdapter(getContext().getApplicationContext(), topTracks));
+        tracksView.setAdapter(new RecyclerAdapterArtists(getContext().getApplicationContext(), topArtistsData));
         return root;
     }
     @Override
