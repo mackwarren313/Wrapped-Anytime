@@ -9,27 +9,31 @@ import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class UserData {
+public class UserData{
     public enum TimeRange {
         SHORT, MEDIUM, LONG
     }
     private List<Track> topTracks;
     private List<Artist> topArtists;
     private String topGenre;
+    private UserData.TimeRange tr;
+    private Date genDate;
 
 
-    public UserData (String userID, Track[] topTracks, String[] topArtists, String topGenre) {
+    public UserData (String userID, Track[] topTracks, String[] topArtists, String topGenre, Date genDate) {
         this.topTracks = new ArrayList<>();
         this.topArtists = new ArrayList<>();
         this.topGenre = topGenre;
+        this.genDate = genDate;
     }
 
-    public UserData() { this(null, null, null, null); }
+    public UserData() { this(null, null, null, null, null); }
     public UserData(String artistJson, String trackJson) {
         JsonObject jsonObject = JsonParser.parseString(artistJson).getAsJsonObject();
         ArrayList<Track> topTracks = new ArrayList<>();
@@ -80,6 +84,21 @@ public class UserData {
 
     public void setTopGenre(String topGenre) { this.topGenre = topGenre; }
 
+    public TimeRange getTr() {
+        return tr;
+    }
+
+    public void setTr(TimeRange tr) {
+        this.tr = tr;
+    }
+
+    public Date getGenDate() {
+        return genDate;
+    }
+
+    public void setGenDate(Date genDate) {
+        this.genDate = genDate;
+    }
 
     @Override
     public String toString() {

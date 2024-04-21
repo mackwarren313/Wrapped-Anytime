@@ -38,6 +38,7 @@ import com.example.wrappedanytime.spotify.Datatypes.Track;
 import com.example.wrappedanytime.spotify.Datatypes.User;
 import com.example.wrappedanytime.spotify.SpotifyData;
 import com.example.wrappedanytime.ui.gallery.GalleryFragment;
+import com.example.wrappedanytime.ui.previousWrappeds.PreviousWrappedsClass;
 import com.example.wrappedanytime.ui.slideshow.SlideShowClass;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -49,7 +50,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.rpc.context.AttributeContext;
@@ -88,7 +91,6 @@ public class HomeFragment extends AppCompatActivity {
         Button createAccount = findViewById(R.id.create_account_button);
         Button login = findViewById(R.id.login_button);
         Button editAccount = findViewById(R.id.edit_account_button);
-        ImageView testing = findViewById(R.id.testingImage);
         Intent signUpIntent = new Intent(HomeFragment.this, SignUpClass.class);
 
 
@@ -217,28 +219,23 @@ public class HomeFragment extends AppCompatActivity {
                 //Toast.makeText(HomeFragment.this, "Login Successful", Toast.LENGTH_SHORT).show();
                 mDatabase = FirebaseDatabase.getInstance().getReference();
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                mDatabase.child("users").child(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if (!task.isSuccessful()) {
-                            Authentication.getToken(HomeFragment.this);
-                        }
-                        else {
+                String userID = user.getUid();
 
-                            Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                            if (String.valueOf(task.getResult().getValue()) == "null") {
-                                Authentication.getToken(HomeFragment.this);
-                            } else {
-                                JsonObject jsonObject = JsonParser.parseString(String.valueOf(task.getResult().getValue())).getAsJsonObject();
-                                String oldToken = jsonObject.get("accessToken").getAsString();
-                                if (!Authentication.testAuth(oldToken, HomeFragment.this)) {
-                                    Authentication.getToken(HomeFragment.this);
-                                } else {
-                                    Authentication.setToken(oldToken);
-                                    afterAuthWork();
-                                }
-                            }
+                mDatabase.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String oldToken = snapshot.child(userID).child("accessToken").getValue(String.class);
+                        if (!Authentication.testAuth(oldToken, HomeFragment.this)) {
+                            Authentication.getToken(HomeFragment.this);
+                        } else {
+                            Authentication.setToken(oldToken);
+                            afterAuthWork();
                         }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
                     }
                 });
                 /*System.out.println("Login Successful");
@@ -271,7 +268,7 @@ public class HomeFragment extends AppCompatActivity {
         //Log.d("myLog", Authentication.getAccessToken());
 
         //change to main page
-        Intent mainIntent = new Intent(HomeFragment.this, SlideShowClass.class);
+        Intent mainIntent = new Intent(HomeFragment.this, PreviousWrappedsClass.class);
 
         startActivity(mainIntent);
 

@@ -17,6 +17,11 @@
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
     <fragment
+        android:id="@+id/nav_prev_wrappeds"
+        android:name="com.example.wrappedanytime.ui.previousWrappeds.PreviousWrappedsFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_previous_wrappeds" />
+    <fragment
         android:id="@+id/nav_signUp"
         android:name="com.example.wrappedanytime.ui.home.SignUpFragment"
         android:label="fragment_sign_up"

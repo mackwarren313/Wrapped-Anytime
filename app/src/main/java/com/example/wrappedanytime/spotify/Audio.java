@@ -15,7 +15,6 @@ public class Audio {
         if (url == null) {
             return false;
         }
-        stopAudio();
         mp = new MediaPlayer();
         try {
             mp.setDataSource(url);

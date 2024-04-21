@@ -37,7 +37,7 @@ public class Artist {
             }
             if (jsonObject.has("images")) {
                 JsonArray jsonArray = jsonObject.getAsJsonArray("images");
-                JsonObject largestImage = jsonArray.get(jsonArray.size()-1).getAsJsonObject();
+                JsonObject largestImage = jsonArray.get(1).getAsJsonObject();
                 this.setImage(new Image(largestImage));
             }
             if (jsonObject.has("genres")) {

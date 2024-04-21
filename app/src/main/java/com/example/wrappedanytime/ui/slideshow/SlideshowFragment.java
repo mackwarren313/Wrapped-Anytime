@@ -21,6 +21,7 @@ import com.example.wrappedanytime.spotify.Datatypes.Track;
 import com.example.wrappedanytime.spotify.Datatypes.User;
 import com.example.wrappedanytime.spotify.Datatypes.UserData;
 import com.example.wrappedanytime.spotify.SpotifyData;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -33,14 +34,21 @@ public class SlideshowFragment extends Fragment{
     private FragmentSlideshowBinding binding;
     SpotifyData dataRetriever = new SpotifyData(this.getActivity());
     User user = dataRetriever.getUser();
-    UserData data = dataRetriever.getUserData(UserData.TimeRange.MEDIUM);
-    List<Artist> topArtistsData = data.getTopArtists();
-    List<Track> topTracksData = data.getTopTracks();
+    //UserData data = dataRetriever.getUserData(UserData.TimeRange.MEDIUM, -1);
+    UserData data;
+    List<Artist> topArtistsData;
+    List<Track> topTracksData;
 
-    String Genre = data.getTopGenre();
+    //String Genre = data.getTopGenre();
+    String Genre;
     RecyclerView artistView;
     RecyclerView tracksView;
-
+    public SlideshowFragment(UserData ud) {
+        data = ud;
+        topArtistsData = data.getTopArtists();
+        topTracksData = data.getTopTracks();
+        Genre = data.getTopGenre();
+    }
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         SlideshowViewModel slideshowViewModel =
@@ -48,6 +56,8 @@ public class SlideshowFragment extends Fragment{
 
         binding = FragmentSlideshowBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+
         ArrayList<String> topArtists = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             topArtists.add(topArtistsData.get(i).getName());
@@ -74,8 +84,6 @@ public class SlideshowFragment extends Fragment{
         tracksView = root.findViewById(R.id.top_tracks_list);
         tracksView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         tracksView.setAdapter(new RecyclerAdapter(getContext().getApplicationContext(), topTracks));
-        ImageView testing = root.findViewById(R.id.testingImage);
-        topArtistsData.get(0).getImage().setImageView(testing);
         return root;
     }
     @Override
