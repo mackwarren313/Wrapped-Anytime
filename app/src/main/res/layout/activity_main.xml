@@ -9,6 +9,13 @@
     tools:openDrawer="start"
     android:name=".MainActivity">
 
+    <fragment
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/my_nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:navGraph="@navigation/mobile_navigation"/>
+
     <include
         android:id="@+id/app_bar_main"
         layout="@layout/app_bar_main"

@@ -130,14 +130,17 @@ public class AccountsFragment extends Fragment {
         return root;
     }
 
-    private void loadData(DataSnapshot dataSnapshot) {
+    private void loadData(DataSnapshot ds) {
         accounts.clear();
-        for(DataSnapshot ds : dataSnapshot.getChildren()){
+        for(int i = 1; i <= ds.getChildrenCount(); i++){
+            Log.d("myApp", String.valueOf(ds));
+            Log.d("myApp", "Wrap " + i);
+            Log.d("myApp746", String.valueOf(ds.child(userID).child("accessToken").getValue(String.class)));
             UserData data = new UserData();
-            data.setTopArtists(ds.child(userID).getValue(UserData.class).getTopArtists());
-            data.setTopTracks(ds.child(userID).getValue(UserData.class).getTopTracks());
-            data.setTopGenre(ds.child(userID).getValue(UserData.class).getTopGenre());
-            data.setDateAndTime(ds.child(userID).getValue(UserData.class).getDateAndTime());
+            data.setTopArtists(ds.child("users").child(userID).child("Wrap " + i).getValue(UserData.class).getTopArtists());
+            data.setTopTracks(ds.child("users").child(userID).child("Wrap " + i).getValue(UserData.class).getTopTracks());
+            data.setTopGenre(ds.child("users").child(userID).child("Wrap " + i).getValue(UserData.class).getTopGenre());
+            data.setDateAndTime(ds.child("users").child(userID).child("Wrap " + i).getValue(UserData.class).getDateAndTime());
             accounts.add(data);
         }
 

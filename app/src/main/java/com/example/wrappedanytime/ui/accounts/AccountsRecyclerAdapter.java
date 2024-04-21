@@ -1,6 +1,7 @@
 package com.example.wrappedanytime.ui.accounts;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +63,7 @@ public class AccountsRecyclerAdapter extends RecyclerView.Adapter<AccountsRecycl
             @Override
             public void onClick(View v) {
                 SlideshowFragment.data = holder.user;
+                Log.d("does load hit", SlideshowFragment.data.toString());
             }
         });
 
@@ -70,7 +72,6 @@ public class AccountsRecyclerAdapter extends RecyclerView.Adapter<AccountsRecycl
             public void onClick(View v) {
                 AccountsFragment.accounts.remove(holder.getAdapterPosition());
                 notifyDataSetChanged();
-
             }
         });
     }

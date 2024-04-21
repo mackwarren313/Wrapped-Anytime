@@ -51,7 +51,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.rpc.context.AttributeContext;
@@ -61,6 +63,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class HomeFragment extends AppCompatActivity {
 
@@ -219,7 +222,27 @@ public class HomeFragment extends AppCompatActivity {
                 //Toast.makeText(HomeFragment.this, "Login Successful", Toast.LENGTH_SHORT).show();
                 mDatabase = FirebaseDatabase.getInstance().getReference();
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                mDatabase.child("users").child(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                String userID = user.getUid();
+
+                mDatabase.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String oldToken = snapshot.child(userID).child("accessToken").getValue(String.class);
+                        if (!Authentication.testAuth(oldToken, HomeFragment.this)) {
+                            Authentication.getToken(HomeFragment.this);
+                        } else {
+                            Authentication.setToken(oldToken);
+                            afterAuthWork();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                /*mDatabase.child("users").child(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if (!task.isSuccessful()) {
@@ -231,6 +254,7 @@ public class HomeFragment extends AppCompatActivity {
                             if (String.valueOf(task.getResult().getValue()) == "null") {
                                 Authentication.getToken(HomeFragment.this);
                             } else {
+                                Log.d("myApp", String.valueOf(task.getResult().getValue()));
                                 JsonObject jsonObject = JsonParser.parseString(String.valueOf(task.getResult().getValue())).getAsJsonObject();
                                 String oldToken = jsonObject.get("accessToken").getAsString();
                                 if (!Authentication.testAuth(oldToken, HomeFragment.this)) {

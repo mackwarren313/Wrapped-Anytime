@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/bg_green"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ui.accounts.AccountsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/accounts_recycler"
