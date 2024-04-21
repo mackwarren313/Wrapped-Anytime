@@ -220,11 +220,10 @@ public class HomeFragment extends AppCompatActivity {
                 mDatabase = FirebaseDatabase.getInstance().getReference();
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 String userID = user.getUid();
-
-                mDatabase.addValueEventListener(new ValueEventListener() {
+                mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String oldToken = snapshot.child(userID).child("accessToken").getValue(String.class);
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String oldToken = dataSnapshot.child("users").child(userID).child("accessToken").getValue(String.class);
                         if (!Authentication.testAuth(oldToken, HomeFragment.this)) {
                             Authentication.getToken(HomeFragment.this);
                         } else {
@@ -232,12 +231,12 @@ public class HomeFragment extends AppCompatActivity {
                             afterAuthWork();
                         }
                     }
-
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
+                    public void onCancelled(DatabaseError databaseError) {
+                        // ...
                     }
                 });
+
                 /*System.out.println("Login Successful");
                 if (Authentication.getAccessToken() == null) {
                     Authentication.getToken(HomeFragment.this);
