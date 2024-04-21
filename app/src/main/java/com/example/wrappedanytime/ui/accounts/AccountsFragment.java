@@ -68,6 +68,7 @@ public class AccountsFragment extends Fragment {
 
         add = root.findViewById(R.id.Add);
 
+        accounts = new ArrayList<>();
 
         accountsListView = root.findViewById(R.id.accounts_recycler);
         accountsListView.setLayoutManager(new LinearLayoutManager(this.getContext()));
