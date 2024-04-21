@@ -38,6 +38,7 @@ import com.example.wrappedanytime.spotify.Datatypes.Track;
 import com.example.wrappedanytime.spotify.Datatypes.User;
 import com.example.wrappedanytime.spotify.SpotifyData;
 import com.example.wrappedanytime.ui.gallery.GalleryFragment;
+import com.example.wrappedanytime.ui.previousWrappeds.PreviousWrappedsClass;
 import com.example.wrappedanytime.ui.slideshow.SlideShowClass;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -271,7 +272,7 @@ public class HomeFragment extends AppCompatActivity {
         //Log.d("myLog", Authentication.getAccessToken());
 
         //change to main page
-        Intent mainIntent = new Intent(HomeFragment.this, SlideShowClass.class);
+        Intent mainIntent = new Intent(HomeFragment.this, PreviousWrappedsClass.class);
 
         startActivity(mainIntent);
 

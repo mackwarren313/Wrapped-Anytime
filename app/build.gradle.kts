@@ -17,6 +17,7 @@ android {
         manifestPlaceholders["redirectSchemeName"] = "wrapped-anytime"
         manifestPlaceholders["redirectHostName"] = "auth"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true;
     }
 
     buildTypes {
