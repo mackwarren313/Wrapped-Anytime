@@ -22,6 +22,7 @@ import com.example.wrappedanytime.spotify.Datatypes.UserData;
 import com.example.wrappedanytime.spotify.SpotifyData;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SlideshowFragment extends Fragment{
@@ -33,6 +34,7 @@ public class SlideshowFragment extends Fragment{
     UserData data;
     List<Artist> topArtistsData;
     List<Track> topTracksData;
+    Date genDate;
 
     //String Genre = data.getTopGenre();
     String Genre;
@@ -43,6 +45,7 @@ public class SlideshowFragment extends Fragment{
         topArtistsData = data.getTopArtists();
         topTracksData = data.getTopTracks();
         Genre = data.getTopGenre();
+        genDate = data.getGenDate();
     }
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,21 +55,27 @@ public class SlideshowFragment extends Fragment{
         binding = FragmentSlideshowBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        topArtistsData = topArtistsData.subList(0,5);
 
-        for (int i = 0; i < 5; i++) {
-            topArtistsData.add(topArtistsData.get(i));
-        }
-
-        ArrayList<String> topTracks = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            topTracks.add(topTracksData.get(i).getName());
-        }
+        topTracksData = topTracksData.subList(0,5);
 
         TextView welcome = root.findViewById(R.id.welcome_with_username);
         welcome.setText("Welcome " + user.getDisplayName());
 
+
+
         TextView topGenre = root.findViewById(R.id.top_genre_tv);
         topGenre.setText(data.getTopGenre());
+
+        TextView dateGenerated = root.findViewById(R.id.date_generated_tv);
+        StringBuilder sb = new StringBuilder();
+        sb.append(genDate.getMonth() + 1);
+        sb.append("/");
+        sb.append(genDate.getDate());
+        sb.append("/");
+        sb.append(genDate.getYear()-100);
+        dateGenerated.setText(sb);
+
         for (int i = 0; i < topTracksData.size(); i++) {
             if (Audio.playAudio(topTracksData.get(i).getPreviewUrl())) break;
         }
@@ -77,7 +86,7 @@ public class SlideshowFragment extends Fragment{
 
         tracksView = root.findViewById(R.id.top_tracks_list);
         tracksView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        tracksView.setAdapter(new RecyclerAdapterArtists(getContext().getApplicationContext(), topArtistsData));
+        tracksView.setAdapter(new RecyclerAdapterTracks(getActivity(), topTracksData));
         return root;
     }
     @Override

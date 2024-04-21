@@ -1,6 +1,8 @@
 package com.example.wrappedanytime.ui.slideshow;
 
+import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,20 +10,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wrappedanytime.R;
-import com.example.wrappedanytime.spotify.Datatypes.Artist;
+import com.example.wrappedanytime.spotify.Datatypes.Album;
+import com.example.wrappedanytime.spotify.Datatypes.Track;
+import com.example.wrappedanytime.spotify.SpotifyData;
+import com.example.wrappedanytime.ui.home.HomeFragment;
 
 import java.util.List;
 
-public class RecyclerAdapterArtists extends RecyclerView.Adapter<RecyclerAdapterArtists.MyViewHolder>{
+public class RecyclerAdapterTracks extends RecyclerView.Adapter<RecyclerAdapterTracks.MyViewHolder>{
 
-    Context context;
-    private List<Artist> list;
+    Activity context;
+    private List<Track> list;
 
 
-    public RecyclerAdapterArtists(Context context, List<Artist> list){
+
+    public RecyclerAdapterTracks(Activity context, List<Track> list){
         this.list = list;
         this.context = context;
     }
@@ -38,16 +45,21 @@ public class RecyclerAdapterArtists extends RecyclerView.Adapter<RecyclerAdapter
 
     @NonNull
     @Override
-    public RecyclerAdapterArtists.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerAdapterTracks.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
         return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerAdapterArtists.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerAdapterTracks.MyViewHolder holder, int position) {
         holder.text.setText(list.get(position).getName());
 
-        list.get(position).getImage().setImageView(holder.image);
+        SpotifyData dataRetriever = new SpotifyData(context);
+
+        String topTrackAlbum = list.get(position).getAlbumID();
+        Log.d("topAlbum", topTrackAlbum);
+        Album topAlbum = dataRetriever.getAlbum(topTrackAlbum);
+        topAlbum.getCoverArt().setImageView(holder.image);
     }
 
     @Override
