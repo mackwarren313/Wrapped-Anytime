@@ -53,5 +53,9 @@
         android:id="@+id/nav_account_list"
         android:name="com.example.wrappedanytime.ui.accounts.AccountsFragment"
         android:label="fragment_account"
-        tools:layout="@layout/fragment_accounts" />
+        tools:layout="@layout/fragment_accounts" >
+        <action
+            android:id="@+id/action_nav_account_list_to_nav_slideshow"
+            app:destination="@id/nav_slideshow" />
+    </fragment>
 </navigation>

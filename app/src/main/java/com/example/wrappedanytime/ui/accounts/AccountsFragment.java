@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
@@ -29,6 +30,7 @@ import com.example.wrappedanytime.spotify.Datatypes.User;
 import com.example.wrappedanytime.spotify.Datatypes.UserData;
 import com.example.wrappedanytime.spotify.SpotifyData;
 import com.example.wrappedanytime.ui.accounts.AccountsViewModel;
+import com.example.wrappedanytime.ui.home.SignUpFragment;
 import com.example.wrappedanytime.ui.slideshow.RecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -56,6 +58,7 @@ public class AccountsFragment extends Fragment {
     public static ArrayList<UserData> accounts;
     private DatabaseReference database;
     Button add;
+    Button generateWrapped;
     private int editLocation;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -67,6 +70,7 @@ public class AccountsFragment extends Fragment {
         View root = binding.getRoot();
 
         add = root.findViewById(R.id.Add);
+        generateWrapped = root.findViewById(R.id.generate_wrapped);
 
         accounts = new ArrayList<>();
 
@@ -116,6 +120,11 @@ public class AccountsFragment extends Fragment {
         add.setOnClickListener(v -> {
             addPopUpCall(root.getContext());
             accountsListView.getAdapter().notifyDataSetChanged();
+        });
+
+        generateWrapped.setOnClickListener(v -> {
+            NavHostFragment.findNavController(AccountsFragment.this)
+                    .navigate(R.id.action_nav_account_list_to_nav_slideshow);
         });
 
         return root;
