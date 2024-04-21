@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -107,6 +108,7 @@ public class SpotifyData {
     }
 
     public UserData getUserData(UserData.TimeRange timeRange) {
+        Date curDate = new Date(System.currentTimeMillis());
         Map<UserData.TimeRange, String> timeRangeMap = new HashMap<>();
         timeRangeMap.put(UserData.TimeRange.SHORT, "short_term");
         timeRangeMap.put(UserData.TimeRange.MEDIUM, "medium_term");
@@ -121,7 +123,10 @@ public class SpotifyData {
                 .addHeader("Authorization", "Bearer " + mAccessToken)
                 .build();
         String trackRet = retJSON(request);
-        return new UserData(artistRet, trackRet);
+        UserData ret = new UserData(artistRet, trackRet);
+        ret.setGenDate(curDate);
+        ret.setTr(timeRange);
+        return ret;
     }
 
 

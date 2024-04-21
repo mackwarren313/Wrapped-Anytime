@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="{user}'s Wrappeds"
-        android:textSize="70sp"
+        android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,19 +20,20 @@
         android:id="@+id/genNewWrapped"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Generate"
+        android:text="Generate New"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/WrappedTitle"
-        app:layout_constraintVertical_bias="0.936" />
+        app:layout_constraintVertical_bias="0.96" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView2"
-        android:layout_width="798dp"
-        android:layout_height="996dp"
-        android:layout_marginTop="1dp"
+        android:id="@+id/oldWrapRecycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/genNewWrapped"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/WrappedTitle" />
 

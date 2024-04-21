@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_shortTerm"
+        android:title="1 Month" />
+    <item
+        android:id="@+id/menu_mediumTerm"
+        android:title="6 Months" />
+    <item
+        android:id="@+id/menu_longTerm"
+        android:title="1 Year" />
+
+</menu>
