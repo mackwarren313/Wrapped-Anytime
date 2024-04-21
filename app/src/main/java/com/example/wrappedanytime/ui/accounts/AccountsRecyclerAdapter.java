@@ -11,10 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wrappedanytime.R;
-import com.example.wrappedanytime.firebasewrapper.FirestoreDatabase;
 import com.example.wrappedanytime.spotify.Datatypes.UserData;
-import com.example.wrappedanytime.ui.home.HomeFragment;
-import com.example.wrappedanytime.ui.slideshow.RecyclerAdapter;
 
 import java.util.ArrayList;
 
